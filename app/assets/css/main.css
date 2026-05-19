@@ -1,0 +1,50 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-primary-900: #4c1d95;
+  --color-primary-950: #2e1065;
+  
+  --font-sans: 'Inter', 'Outfit', 'Roboto', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased font-sans transition-colors duration-300;
+  }
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-gray-900 dark:text-white;
+  }
+}
+
+/* Fluid Ad Space styling to prevent layout shifts */
+.ad-slot-fluid {
+  min-height: 250px; /* Base height for mobile */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  background-color: var(--color-gray-100);
+  border-radius: 0.5rem;
+}
+.dark .ad-slot-fluid {
+  background-color: var(--color-gray-900);
+}
+@media (min-width: 768px) {
+  .ad-slot-fluid {
+    min-height: 90px; /* Base height for desktop banner */
+  }
+}
