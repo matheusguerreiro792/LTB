@@ -24,7 +24,7 @@
             </p>
             <div class="pt-6">
               <NuxtLink :to="`/devocionais/${latestDevocional.id}`" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-3.5 rounded-full font-medium transition-all shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:-translate-y-0.5">
-                <span>Ler Reflexão Completa</span>
+                <span>Ler Devocional Completo</span>
                 <Icon name="lucide:arrow-right" class="w-4 h-4" />
               </NuxtLink>
             </div>
@@ -50,7 +50,7 @@
       </div>
 
       <!-- Últimos Estudos Teológicos -->
-      <section>
+      <section v-if="estudos.length > 0">
         <div class="flex items-center justify-between mb-8">
           <h2 class="text-2xl font-bold">Estudos Recentes</h2>
           <NuxtLink to="/estudos" class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm flex items-center gap-1">
@@ -83,15 +83,15 @@
       </section>
 
       <!-- CTA Loja / Infoprodutos -->
-      <section class="bg-gray-900 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <section class="bg-primary-700 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden dark:bg-gray-900">
         <div class="absolute top-0 right-0 w-64 h-64 bg-primary-600 rounded-full blur-3xl opacity-20 -mr-32 -mt-32"></div>
         <div class="relative z-10 md:w-2/3 space-y-6">
-          <h2 class="text-3xl font-bold">Aprofunde seu conhecimento</h2>
-          <p class="text-gray-300 text-lg leading-relaxed max-w-xl">
-            Conheça nossos materiais exclusivos e livros recomendados para auxiliar nos seus estudos bíblicos e vida devocional.
+          <h2 class="text-3xl font-bold text-white">Aprofunde seu conhecimento</h2>
+          <p class="text-gray-100 text-lg leading-relaxed max-w-xl dark:text-gray-300">
+            Conheça nossos materiais e livros recomendados para auxiliar nos seus estudos bíblicos e vida devocional.
           </p>
-          <NuxtLink to="/loja" class="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-full font-medium transition-colors">
-            Acessar a Loja <Icon name="lucide:shopping-bag" class="w-4 h-4" />
+          <NuxtLink to="/materiais" class="inline-flex items-center gap-2 bg-white text-gray-900 hover:bg-gray-100 px-6 py-3 rounded-full font-medium transition-colors">
+            Acessar Materiais <Icon name="lucide:shopping-bag" class="w-4 h-4" />
           </NuxtLink>
         </div>
       </section>

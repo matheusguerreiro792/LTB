@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto px-4 py-12 max-w-5xl space-y-12">
     <header class="text-center space-y-4 max-w-2xl mx-auto">
-      <h1 class="text-3xl md:text-4xl font-bold">Nossa Loja</h1>
+      <h1 class="text-3xl md:text-4xl font-bold">Materiais Recomendados</h1>
       <p class="text-gray-600 dark:text-gray-400 text-lg">
         Aprofunde seus estudos com nossa seleção de infoprodutos, e-books e materiais recomendados.
       </p>
@@ -53,6 +53,6 @@
 
 <script setup>
 useHead({
-  title: 'Loja',
+  title: 'Materiais',
 })
 </script>

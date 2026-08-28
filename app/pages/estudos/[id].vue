@@ -63,8 +63,8 @@
             Aprofunde ainda mais seus conhecimentos com nossos materiais e livros recomendados para estudo.
           </p>
           <div class="pt-4">
-            <NuxtLink to="/loja" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 shadow-lg shadow-primary-500/30">
-              Acessar a Loja <Icon name="lucide:shopping-bag" class="w-4 h-4" />
+            <NuxtLink to="/materiais" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 shadow-lg shadow-primary-500/30">
+              Acessar Materiais <Icon name="lucide:shopping-bag" class="w-4 h-4" />
             </NuxtLink>
           </div>
         </div>

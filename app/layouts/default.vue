@@ -14,14 +14,14 @@
         <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center gap-8 font-medium">
           <NuxtLink to="/devocionais" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Devocionais</NuxtLink>
-          <NuxtLink to="/estudos" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Estudos</NuxtLink>
-          <NuxtLink to="/loja" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Loja</NuxtLink>
+          <!-- <NuxtLink to="/estudos" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Estudos</NuxtLink> -->
+          <NuxtLink to="/materiais" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Materiais</NuxtLink>
           <NuxtLink to="/sobre" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Sobre</NuxtLink>
         </nav>
 
         <!-- Actions -->
         <div class="flex items-center gap-4">
-          <button @click="toggleTheme" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Alternar Tema">
+          <button @click="toggleTheme" class="p-2 flex rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Alternar Tema">
             <Icon v-if="isDark" name="lucide:sun" class="w-5 h-5 text-gray-400 hover:text-yellow-400" />
             <Icon v-else name="lucide:moon" class="w-5 h-5 text-gray-500 hover:text-primary-600" />
           </button>
@@ -42,7 +42,7 @@
       <div v-if="isMobileMenuOpen" class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 py-4 space-y-4">
         <NuxtLink @click="isMobileMenuOpen = false" to="/devocionais" class="block font-medium hover:text-primary-600">Devocionais</NuxtLink>
         <NuxtLink @click="isMobileMenuOpen = false" to="/estudos" class="block font-medium hover:text-primary-600">Estudos</NuxtLink>
-        <NuxtLink @click="isMobileMenuOpen = false" to="/loja" class="block font-medium hover:text-primary-600">Loja</NuxtLink>
+        <NuxtLink @click="isMobileMenuOpen = false" to="/materiais" class="block font-medium hover:text-primary-600">Materiais</NuxtLink>
         <NuxtLink @click="isMobileMenuOpen = false" to="/sobre" class="block font-medium hover:text-primary-600">Sobre</NuxtLink>
         <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
           <NuxtLink @click="isMobileMenuOpen = false" to="/admin" class="flex items-center justify-between font-medium">
@@ -74,17 +74,17 @@
             </p>
           </div>
           <div>
-            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Links Rápidos</h3>
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Link Rápido</h3>
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
               <li><NuxtLink to="/devocionais" class="hover:text-primary-600 transition-colors">Devocionais Diários</NuxtLink></li>
-              <li><NuxtLink to="/estudos" class="hover:text-primary-600 transition-colors">Estudos Teológicos</NuxtLink></li>
-              <li><NuxtLink to="/loja" class="hover:text-primary-600 transition-colors">Nossa Loja</NuxtLink></li>
+              <!-- <li><NuxtLink to="/estudos" class="hover:text-primary-600 transition-colors">Estudos Teológicos</NuxtLink></li> -->
+              <!-- <li><NuxtLink to="/materiais" class="hover:text-primary-600 transition-colors">Materiais</NuxtLink></li> -->
             </ul>
           </div>
           <div>
             <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Apoie</h3>
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
-              <li><a href="#" class="hover:text-primary-600 transition-colors">Adquirir Materiais</a></li>
+              <li><NuxtLink to="/materiais" class="hover:text-primary-600 transition-colors">Adquirir Materiais</NuxtLink></li>
               <li><a href="#" class="hover:text-primary-600 transition-colors">Doações</a></li>
               <li><NuxtLink to="/sobre" class="hover:text-primary-600 transition-colors">Sobre o Projeto</NuxtLink></li>
             </ul>
@@ -94,14 +94,14 @@
           <p class="text-xs text-gray-400">
             &copy; {{ new Date().getFullYear() }} Viva a Bíblia. Todos os direitos reservados.
           </p>
-          <div class="flex items-center gap-4 text-gray-400">
+          <!-- <div class="flex items-center gap-4 text-gray-400">
             <a href="#" class="hover:text-gray-900 dark:hover:text-white transition-colors">
               <Icon name="lucide:instagram" class="w-5 h-5" />
             </a>
             <a href="#" class="hover:text-gray-900 dark:hover:text-white transition-colors">
               <Icon name="lucide:youtube" class="w-5 h-5" />
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
     </footer>
