@@ -48,14 +48,10 @@
             <h2 class="text-xl font-bold group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
               {{ dev.titulo }}
             </h2>
-            <div class="font-sans text-gray-600 dark:text-gray-300 text-sm italic">
-              "{{ dev.versiculo }}"
+            <div class="font-sans text-gray-700 dark:text-gray-300 text-sm italic">
+              {{ dev.versiculo }}
             </div>
-            <div 
-              class="prose prose-sm dark:prose-invert max-w-none text-gray-500 dark:text-gray-400 line-clamp-2 pt-2 prose-p:my-0 prose-headings:my-0" 
-              v-html="renderMarkdown(dev.conteudo)">
-            </div>
-            <div v-if="dev.tema" class="inline-block mt-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-600 dark:text-gray-300">
+            <div v-if="dev.tema" class="inline-block mt-2 px-3 py-1 rounded-full bg-gray-100 dark:bg-gray-800 text-xs font-medium text-gray-700 dark:text-gray-200">
               #{{ dev.tema }}
             </div>
           </div>

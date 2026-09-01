@@ -15,20 +15,20 @@
       </NuxtLink>
     </div>
 
-    <article v-else class="space-y-10">
+    <article v-else class="space-y-8">
       <NuxtLink to="/devocionais" class="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors text-sm font-medium mb-4">
         <Icon name="lucide:arrow-left" class="w-4 h-4" /> Voltar
       </NuxtLink>
 
       <header class="space-y-6">
         <div class="flex flex-wrap items-center gap-3">
-          <span class="px-3 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider rounded-full">
+          <span class="px-3 py-1 bg-primary-100/75 dark:bg-primary-950/50 text-primary-700 dark:text-primary-300 text-xs font-bold uppercase tracking-wider rounded-full">
             {{ devocional.livro }}
           </span>
-          <span v-if="devocional.tema" class="text-gray-400 dark:text-gray-500 text-sm">
+          <span v-if="devocional.tema" class="text-gray-600 dark:text-gray-400 text-sm">
             #{{ devocional.tema }}
           </span>
-          <span class="text-gray-400 dark:text-gray-500 text-sm flex items-center gap-1 ml-auto">
+          <span class="text-gray-500 text-sm flex items-center gap-1 ml-auto">
             <Icon name="lucide:calendar" class="w-4 h-4" />
             {{ formattedDate }}
           </span>
@@ -38,9 +38,9 @@
           {{ devocional.titulo }}
         </h1>
 
-        <blockquote class="border-l-4 border-primary-500 pl-6 py-2 my-8 bg-gradient-to-r from-primary-50/50 to-transparent dark:from-primary-900/10 rounded-r-2xl">
+        <blockquote class="border-l-4 border-primary-500 pl-5 py-2.5 my-8 bg-linear-to-r from-primary-100/50 to-transparent dark:from-primary-900/25 rounded-r-xl">
           <p class="font-sans text-lg md:text-xl text-gray-700 dark:text-gray-300 italic leading-relaxed">
-            "{{ devocional.versiculo }}"
+            {{ devocional.versiculo }}
           </p>
         </blockquote>
       </header>
@@ -50,22 +50,22 @@
       </div>
 
       <div 
-        class="prose prose-lg dark:prose-invert prose-primary max-w-none text-gray-700 dark:text-gray-300 prose-headings:font-bold prose-a:text-primary-600 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:rounded-r-xl prose-img:rounded-2xl"
+        class="prose prose-lg prose-h2:mb-4 prose-h3:mb-2 dark:prose-invert prose-primary max-w-none text-gray-700 dark:text-gray-300 prose-headings:font-bold prose-a:text-primary-600 prose-blockquote:border-primary-500 prose-blockquote:bg-gray-100 dark:prose-blockquote:bg-gray-800/50 prose-blockquote:py-1 prose-blockquote:px-9 prose-blockquote:rounded-r-xl prose-blockquote:-mb-2 prose-img:rounded-2xl prose-li:marker:text-primary-500"
         v-html="htmlContent">
       </div>
 
       <!-- Área de Compartilhamento e Próximos Passos -->
-      <footer class="pt-10 mt-10 border-t border-gray-100 dark:border-gray-800 space-y-8">
-        <div class="bg-gray-50 dark:bg-gray-900 rounded-3xl p-8 text-center space-y-4">
+      <footer class="pt-8 mt-8 border-t border-gray-200 dark:border-gray-800 space-y-8">
+        <div class="bg-gray-100 dark:bg-gray-900 rounded-2xl p-8 text-center space-y-4">
           <h3 class="font-bold text-xl">Gostou desta reflexão?</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
-            Compartilhe com seus amigos e familiares, ou explore nossos estudos aprofundados baseados no comentário Beacon.
+            Compartilhe com seus amigos e familiares.
           </p>
-          <div class="pt-4">
+          <!-- <div class="pt-4">
             <NuxtLink to="/estudos" class="inline-flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-6 py-3 rounded-full font-medium transition-transform hover:scale-105">
               Conhecer Estudos Teológicos <Icon name="lucide:book" class="w-4 h-4" />
             </NuxtLink>
-          </div>
+          </div> -->
         </div>
       </footer>
     </article>
