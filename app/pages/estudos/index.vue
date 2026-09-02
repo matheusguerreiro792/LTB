@@ -67,57 +67,39 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { collection, query, orderBy, getDocs } from 'firebase/firestore'
+import { ref, computed } from 'vue'
 import { marked } from 'marked'
 
 useHead({
-  title: 'Estudos',
+  title: 'Estudos Teológicos',
 })
 
-const { $firestore } = useNuxtApp()
-const estudos = ref([])
-const isLoading = ref(true)
+const { data: estudosData, pending: isLoading } = await useFetch('/api/estudos', {
+  key: 'estudos-list',
+  default: () => []
+})
+
 const selectedFilter = ref('Todos')
 
+const estudos = computed(() => estudosData.value || [])
+
+// Extrair lista única de temas
 const availableThemes = computed(() => {
   const temas = estudos.value.map(e => e.tema).filter(Boolean)
   return [...new Set(temas)].sort()
 })
 
+// Filtragem
 const filteredEstudos = computed(() => {
-  if (selectedFilter.value === 'Todos') return estudos.value
+  if (selectedFilter.value === 'Todos') {
+    return estudos.value
+  }
   return estudos.value.filter(e => e.tema === selectedFilter.value)
 })
 
-const fetchEstudos = async () => {
-  if (!$firestore) {
-    isLoading.value = false
-    return
-  }
-  
-  try {
-    const q = query(collection($firestore, 'estudos'), orderBy('createdAt', 'desc'))
-    const querySnapshot = await getDocs(q)
-    const docs = []
-    querySnapshot.forEach((doc) => {
-      docs.push({ id: doc.id, ...doc.data() })
-    })
-    estudos.value = docs
-  } catch (error) {
-    console.error("Erro ao buscar estudos:", error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(() => {
-  fetchEstudos()
-})
-
-const formatDate = (timestamp) => {
-  if (!timestamp) return ''
-  const date = timestamp.toDate()
+const formatDate = (dateStr) => {
+  if (!dateStr) return ''
+  const date = new Date(dateStr)
   return date.toLocaleDateString('pt-BR', { 
     day: '2-digit', 
     month: 'short', 

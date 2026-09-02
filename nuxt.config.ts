@@ -32,5 +32,26 @@ export default defineNuxtConfig({
   
   modules: [
     '@nuxt/icon'
-  ]
+  ],
+
+  routeRules: {
+    '/': { isr: 3600 },
+    '/materiais': { isr: 3600 },
+    '/devocionais': { isr: 3600 },
+    '/devocionais/**': { isr: 3600 },
+    '/estudos': { isr: 3600 },
+    '/estudos/**': { isr: 3600 },
+    '/sobre': { prerender: true },
+
+    '/api/**': {
+      swr: 3600,
+      headers: {
+        'cache-control': 's-maxage=3600, stale-while-revalidate'
+      }
+    },
+
+    '/admin': { ssr: false },
+    '/admin/**': { ssr: false }
+  }
 })
+

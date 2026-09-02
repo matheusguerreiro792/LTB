@@ -119,58 +119,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore'
-
+import { computed } from 'vue'
 import { marked } from 'marked'
 
 useHead({
   title: 'Início',
 })
 
-const { $firestore } = useNuxtApp()
-const latestDevocional = ref(null)
-const isLoadingDevocional = ref(true)
+// Buscar dados com cache SWR da Vercel
+const { data: devocionaisData, pending: isLoadingDevocional } = await useFetch('/api/devocionais', {
+  key: 'home-devocionais',
+  default: () => []
+})
 
-const estudos = ref([])
+const { data: estudosData } = await useFetch('/api/estudos', {
+  key: 'home-estudos',
+  default: () => []
+})
 
-const fetchLatestDevocional = async () => {
-  if (!$firestore) {
-    isLoadingDevocional.value = false
-    return
-  }
-  try {
-    const q = query(collection($firestore, 'devocionais'), orderBy('createdAt', 'desc'), limit(1))
-    const querySnapshot = await getDocs(q)
-    if (!querySnapshot.empty) {
-      const doc = querySnapshot.docs[0]
-      latestDevocional.value = { id: doc.id, ...doc.data() }
-    }
-  } catch (error) {
-    console.error("Erro ao buscar o devocional mais recente:", error)
-  } finally {
-    isLoadingDevocional.value = false
-  }
-}
+const latestDevocional = computed(() => {
+  return devocionaisData.value?.[0] || null
+})
 
-const fetchLatestEstudos = async () => {
-  if (!$firestore) return
-  try {
-    const q = query(collection($firestore, 'estudos'), orderBy('createdAt', 'desc'), limit(3))
-    const querySnapshot = await getDocs(q)
-    const docs = []
-    querySnapshot.forEach((doc) => {
-      docs.push({ id: doc.id, ...doc.data() })
-    })
-    estudos.value = docs
-  } catch (error) {
-    console.error("Erro ao buscar estudos recentes:", error)
-  }
-}
-
-onMounted(() => {
-  fetchLatestDevocional()
-  fetchLatestEstudos()
+const estudos = computed(() => {
+  return (estudosData.value || []).slice(0, 3)
 })
 
 const renderMarkdown = (text) => {

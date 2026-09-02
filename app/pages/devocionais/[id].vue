@@ -73,49 +73,24 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { doc, getDoc } from 'firebase/firestore'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from 'marked'
 
 const route = useRoute()
-const { $firestore } = useNuxtApp()
+const id = route.params.id
 
-const devocional = ref(null)
-const isLoading = ref(true)
+const { data: devocional, pending: isLoading } = await useFetch(`/api/devocionais/${id}`, {
+  key: `devocional-${id}`
+})
 
-const fetchDevocional = async () => {
-  if (!$firestore) return
-  
-  const id = route.params.id
-  
-  // Tratamento especial para o "/devocionais/hoje" caso seja chamado diretamente (fallback)
-  if (id === 'hoje') {
-    // Para simplificar, poderíamos redirecionar para a home ou buscar o mais recente aqui.
-    // Como a Home já aponta para a home com a lógica, vou apenas buscar o mais recente se a URL for "hoje".
-    // Por enquanto, o ideal é não usar "hoje" como ID real no banco.
-  }
-
-  try {
-    const docRef = doc($firestore, 'devocionais', id)
-    const docSnap = await getDoc(docRef)
-    
-    if (docSnap.exists()) {
-      devocional.value = { id: docSnap.id, ...docSnap.data() }
-      
-      // Update SEO Meta tags after fetching dynamically
-      useSeoMeta({
-        title: `${devocional.value.titulo} | Viva a Bíblia`,
-        description: devocional.value.versiculo,
-        ogTitle: devocional.value.titulo,
-        ogDescription: devocional.value.versiculo,
-      })
-    }
-  } catch (error) {
-    console.error("Erro ao carregar devocional:", error)
-  } finally {
-    isLoading.value = false
-  }
+if (devocional.value) {
+  useSeoMeta({
+    title: `${devocional.value.titulo} | Viva a Bíblia`,
+    description: devocional.value.versiculo,
+    ogTitle: devocional.value.titulo,
+    ogDescription: devocional.value.versiculo,
+  })
 }
 
 const htmlContent = computed(() => {
@@ -125,15 +100,11 @@ const htmlContent = computed(() => {
 
 const formattedDate = computed(() => {
   if (!devocional.value?.createdAt) return ''
-  const date = devocional.value.createdAt.toDate()
+  const date = new Date(devocional.value.createdAt)
   return date.toLocaleDateString('pt-BR', { 
     day: '2-digit', 
     month: 'long', 
     year: 'numeric' 
   })
-})
-
-onMounted(() => {
-  fetchDevocional()
 })
 </script>

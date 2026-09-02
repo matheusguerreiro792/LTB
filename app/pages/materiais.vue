@@ -13,7 +13,7 @@
     </div>
 
     <!-- Empty State -->
-    <div v-else-if="materiais.length === 0" class="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-8">
+    <div v-else-if="materiaisAtivos.length === 0" class="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 p-8">
       <div class="w-12 h-12 rounded-2xl bg-primary-50 dark:bg-primary-900/30 text-primary-600 flex items-center justify-center mx-auto mb-4">
         <Icon name="lucide:shopping-bag" class="w-6 h-6" />
       </div>
@@ -78,42 +78,22 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { collection, getDocs, query, orderBy } from 'firebase/firestore'
+import { computed } from 'vue'
 
 useHead({
   title: 'Materiais',
 })
 
-const { $firestore } = useNuxtApp()
-const materiais = ref([])
-const pending = ref(true)
+const { data, pending } = await useFetch('/api/materiais', {
+  key: 'materiais-list',
+  default: () => []
+})
 
 // Filtra apenas os ativos e dá prioridade para os que estão em destaque
 const materiaisAtivos = computed(() => {
-  return materiais.value
+  const list = data.value || []
+  return list
     .filter(item => item.ativo !== false)
     .sort((a, b) => (b.destaque ? 1 : 0) - (a.destaque ? 1 : 0))
-})
-
-const fetchMateriais = async () => {
-  if (!$firestore) {
-    pending.value = false
-    return
-  }
-
-  try {
-    const q = query(collection($firestore, 'materiais'), orderBy('createdAt', 'desc'))
-    const snap = await getDocs(q)
-    materiais.value = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-  } catch (error) {
-    console.error('Erro ao buscar materiais do Firestore:', error)
-  } finally {
-    pending.value = false
-  }
-}
-
-onMounted(() => {
-  fetchMateriais()
 })
 </script>

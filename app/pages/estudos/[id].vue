@@ -74,42 +74,24 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { doc, getDoc } from 'firebase/firestore'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from 'marked'
 
 const route = useRoute()
-const { $firestore } = useNuxtApp()
+const id = route.params.id
 
-const estudo = ref(null)
-const isLoading = ref(true)
+const { data: estudo, pending: isLoading } = await useFetch(`/api/estudos/${id}`, {
+  key: `estudo-${id}`
+})
 
-const fetchEstudo = async () => {
-  if (!$firestore) return
-  
-  const id = route.params.id
-
-  try {
-    const docRef = doc($firestore, 'estudos', id)
-    const docSnap = await getDoc(docRef)
-    
-    if (docSnap.exists()) {
-      estudo.value = { id: docSnap.id, ...docSnap.data() }
-      
-      // Update SEO Meta tags
-      useSeoMeta({
-        title: `${estudo.value.titulo} | Estudo Teológico`,
-        description: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
-        ogTitle: estudo.value.titulo,
-        ogDescription: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
-      })
-    }
-  } catch (error) {
-    console.error("Erro ao carregar estudo:", error)
-  } finally {
-    isLoading.value = false
-  }
+if (estudo.value) {
+  useSeoMeta({
+    title: `${estudo.value.titulo} | Estudo Teológico`,
+    description: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
+    ogTitle: estudo.value.titulo,
+    ogDescription: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
+  })
 }
 
 const htmlContent = computed(() => {
@@ -119,15 +101,11 @@ const htmlContent = computed(() => {
 
 const formattedDate = computed(() => {
   if (!estudo.value?.createdAt) return ''
-  const date = estudo.value.createdAt.toDate()
+  const date = new Date(estudo.value.createdAt)
   return date.toLocaleDateString('pt-BR', { 
     day: '2-digit', 
     month: 'long', 
     year: 'numeric' 
   })
-})
-
-onMounted(() => {
-  fetchEstudo()
 })
 </script>

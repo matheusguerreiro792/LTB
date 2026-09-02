@@ -62,60 +62,40 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { collection, query, orderBy, getDocs } from 'firebase/firestore'
+import { ref, computed } from 'vue'
 import { marked } from 'marked'
 
 useHead({
   title: 'Devocionais',
 })
 
-const { $firestore } = useNuxtApp()
-const devocionais = ref([])
-const isLoading = ref(true)
+const { data: devocionaisData, pending: isLoading } = await useFetch('/api/devocionais', {
+  key: 'devocionais-list',
+  default: () => []
+})
+
 const selectedFilter = ref('Todos')
 
+const devocionais = computed(() => devocionaisData.value || [])
+
+// Extrair lista única de livros
 const availableBooks = computed(() => {
   const books = devocionais.value.map(d => d.livro).filter(Boolean)
   return [...new Set(books)].sort()
 })
 
+// Filtragem
 const filteredDevocionais = computed(() => {
   if (selectedFilter.value === 'Todos') {
     return devocionais.value
   }
-  return devocionais.value.filter(dev => dev.livro === selectedFilter.value)
+  return devocionais.value.filter(d => d.livro === selectedFilter.value)
 })
 
-const fetchDevocionais = async () => {
-  if (!$firestore) {
-    isLoading.value = false
-    return
-  }
-  
-  try {
-    const q = query(collection($firestore, 'devocionais'), orderBy('createdAt', 'desc'))
-    const querySnapshot = await getDocs(q)
-    const docs = []
-    querySnapshot.forEach((doc) => {
-      docs.push({ id: doc.id, ...doc.data() })
-    })
-    devocionais.value = docs
-  } catch (error) {
-    console.error("Erro ao buscar devocionais:", error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(() => {
-  fetchDevocionais()
-})
-
-const formatDate = (timestamp) => {
-  if (!timestamp) return { month: '', day: '' }
-  const date = timestamp.toDate()
-  const month = date.toLocaleString('pt-BR', { month: 'short' }).substring(0, 3)
+const formatDate = (dateStr) => {
+  if (!dateStr) return { day: '', month: '' }
+  const date = new Date(dateStr)
+  const month = date.toLocaleString('pt-BR', { month: 'short' }).replace('.', '').toUpperCase().substring(0, 3)
   const day = date.getDate().toString().padStart(2, '0')
   return { month, day }
 }
