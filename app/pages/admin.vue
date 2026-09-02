@@ -48,7 +48,7 @@
       </header>
 
       <div v-if="currentView === 'dashboard'" class="space-y-12">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           <div @click="openForm('new_devocional')"
             class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors group">
             <div
@@ -58,7 +58,7 @@
             <h3 class="font-bold text-lg">Novo Devocional</h3>
             <p class="text-sm text-gray-500 mt-1">Criar reflexão diária</p>
           </div>
-          
+
           <div @click="openForm('new_estudo')"
             class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors group">
             <div
@@ -69,14 +69,72 @@
             <p class="text-sm text-gray-500 mt-1">Criar artigo teológico</p>
           </div>
 
-          <div
-            class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors">
+          <div @click="openForm('new_material')"
+            class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors group">
             <div
-              class="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-600 flex items-center justify-center mb-4">
-              <Icon name="lucide:settings" class="w-5 h-5" />
+              class="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Icon name="lucide:shopping-bag" class="w-5 h-5" />
             </div>
-            <h3 class="font-bold text-lg">Configurações</h3>
-            <p class="text-sm text-gray-500 mt-1">Gerenciar site</p>
+            <h3 class="font-bold text-lg">Novo Material</h3>
+            <p class="text-sm text-gray-500 mt-1">E-books, livros e cursos</p>
+          </div>
+        </div>
+
+        <!-- Listagem de Materiais -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-bold flex items-center gap-2">
+              <Icon name="lucide:shopping-bag" class="w-5 h-5 text-primary-600" />
+              Materiais Cadastrados
+            </h2>
+            <button @click="openForm('new_material')"
+              class="text-xs bg-primary-50 dark:bg-primary-900/30 text-primary-600 hover:bg-primary-100 dark:hover:bg-primary-900/50 font-semibold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+              <Icon name="lucide:plus" class="w-3.5 h-3.5" /> Adicionar Material
+            </button>
+          </div>
+          <div
+            class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+            <div v-if="materiaisList.length === 0" class="p-6 text-center text-gray-500">Nenhum material encontrado.
+            </div>
+            <div v-for="mat in materiaisList" :key="mat.id"
+              class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+              <div class="flex-1 mb-2 sm:mb-0">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-xs px-2 py-0.5 rounded-md font-semibold bg-primary-50 dark:bg-primary-900/30 text-primary-600">
+                    {{ mat.categoria || 'Material' }}
+                  </span>
+                  <span v-if="mat.destaque"
+                    class="text-xs px-2 py-0.5 rounded-md font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 flex items-center gap-1">
+                    <Icon name="lucide:star" class="w-3 h-3 fill-current" /> Destaque
+                  </span>
+                  <span
+                    :class="mat.ativo !== false ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300' : 'bg-gray-100 text-gray-500 dark:bg-gray-800'"
+                    class="text-xs px-2 py-0.5 rounded-md font-medium">
+                    {{ mat.ativo !== false ? 'Ativo' : 'Pausado' }}
+                  </span>
+                  <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ mat.titulo }}</h4>
+                </div>
+                <div class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                  <span class="font-semibold text-emerald-600">R$ {{ Number(mat.preco || 0).toFixed(2).replace('.', ',')
+                    }}</span> &bull;
+                  <span v-if="mat.urlCheckout" class="truncate max-w-xs text-xs text-gray-400">Link configurado</span>
+                  <span v-else class="text-xs text-amber-500">Sem link de checkout</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button @click="editItem(mat, 'material')"
+                  class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                  title="Editar">
+                  <Icon name="lucide:edit-2" class="w-4 h-4" />
+                </button>
+                <button @click="deleteItem(mat.id, 'materiais')"
+                  class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                  title="Excluir">
+                  <Icon name="lucide:trash-2" class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -86,21 +144,28 @@
             <Icon name="lucide:list" class="w-5 h-5 text-primary-600" />
             Devocionais Publicados
           </h2>
-          <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
-            <div v-if="devocionaisList.length === 0" class="p-6 text-center text-gray-500">Nenhum devocional encontrado.</div>
-            <div v-for="dev in devocionaisList" :key="dev.id" class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div
+            class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+            <div v-if="devocionaisList.length === 0" class="p-6 text-center text-gray-500">Nenhum devocional encontrado.
+            </div>
+            <div v-for="dev in devocionaisList" :key="dev.id"
+              class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
               <div class="flex-1 mb-2 sm:mb-0">
                 <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ dev.titulo }}</h4>
                 <div class="text-sm text-gray-500 flex items-center gap-2">
-                  <span class="text-primary-600 font-medium">{{ dev.livro }}</span> &bull; 
+                  <span class="text-primary-600 font-medium">{{ dev.livro }}</span> &bull;
                   <span>{{ formatDate(dev.createdAt) }}</span>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button @click="editItem(dev, 'devocional')" class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors" title="Editar">
+                <button @click="editItem(dev, 'devocional')"
+                  class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                  title="Editar">
                   <Icon name="lucide:edit-2" class="w-4 h-4" />
                 </button>
-                <button @click="deleteItem(dev.id, 'devocionais')" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors" title="Excluir">
+                <button @click="deleteItem(dev.id, 'devocionais')"
+                  class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                  title="Excluir">
                   <Icon name="lucide:trash-2" class="w-4 h-4" />
                 </button>
               </div>
@@ -114,21 +179,27 @@
             <Icon name="lucide:list" class="w-5 h-5 text-primary-600" />
             Estudos Publicados
           </h2>
-          <div class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+          <div
+            class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
             <div v-if="estudosList.length === 0" class="p-6 text-center text-gray-500">Nenhum estudo encontrado.</div>
-            <div v-for="estudo in estudosList" :key="estudo.id" class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+            <div v-for="estudo in estudosList" :key="estudo.id"
+              class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
               <div class="flex-1 mb-2 sm:mb-0">
                 <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ estudo.titulo }}</h4>
                 <div class="text-sm text-gray-500 flex items-center gap-2">
-                  <span class="text-primary-600 font-medium">{{ estudo.livro }} {{ estudo.capitulo }}</span> &bull; 
+                  <span class="text-primary-600 font-medium">{{ estudo.livro }} {{ estudo.capitulo }}</span> &bull;
                   <span>{{ formatDate(estudo.createdAt) }}</span>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button @click="editItem(estudo, 'estudo')" class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors" title="Editar">
+                <button @click="editItem(estudo, 'estudo')"
+                  class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                  title="Editar">
                   <Icon name="lucide:edit-2" class="w-4 h-4" />
                 </button>
-                <button @click="deleteItem(estudo.id, 'estudos')" class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors" title="Excluir">
+                <button @click="deleteItem(estudo.id, 'estudos')"
+                  class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                  title="Excluir">
                   <Icon name="lucide:trash-2" class="w-4 h-4" />
                 </button>
               </div>
@@ -138,139 +209,283 @@
       </div>
 
       <!-- Formulário de Novo Devocional -->
-      <div v-else-if="currentView === 'new_devocional'" class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+      <div v-else-if="currentView === 'new_devocional'"
+        class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="border-b border-gray-100 dark:border-gray-800 p-6 flex items-center justify-between">
           <div class="flex items-center gap-4">
-            <button @click="currentView = 'dashboard'" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <button @click="currentView = 'dashboard'"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <Icon name="lucide:arrow-left" class="w-5 h-5" />
             </button>
             <h2 class="text-xl font-bold">{{ editingId ? 'Editar Devocional' : 'Criar Novo Devocional' }}</h2>
           </div>
         </div>
-        
+
         <form @submit.prevent="submitDevocional" class="p-6 md:p-8 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
-              <input v-model="devocionalForm.titulo" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="devocionalForm.titulo" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
-            
+
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro Bíblico (Ex: Salmos)</label>
-              <input v-model="devocionalForm.livro" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro Bíblico (Ex:
+                Salmos)</label>
+              <input v-model="devocionalForm.livro" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 - "No dia em que eu...")</label>
-              <input v-model="devocionalForm.versiculo" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 - "No
+                dia em que eu...")</label>
+              <input v-model="devocionalForm.versiculo" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
-            
+
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra, Ex: Confiança)</label>
-              <input v-model="devocionalForm.tema" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra, Ex:
+                Confiança)</label>
+              <input v-model="devocionalForm.tema" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
           </div>
 
           <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional (Markdown suportado)</label>
-              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" class="text-xs text-primary-600 hover:underline flex items-center gap-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional (Markdown
+                suportado)</label>
+              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
+                class="text-xs text-primary-600 hover:underline flex items-center gap-1">
                 <Icon name="lucide:help-circle" class="w-3 h-3" />
                 Guia de formatação
               </a>
             </div>
-            <textarea v-model="devocionalForm.conteudo" required rows="12" placeholder="## Título principal&#10;&#10;Escreva o seu texto aqui usando marcação...&#10;&#10;* **Negrito**&#10;* *Itálico*&#10;* [Links](https://...)" class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
+            <textarea v-model="devocionalForm.conteudo" required rows="12"
+              placeholder="## Título principal&#10;&#10;Escreva o seu texto aqui usando marcação...&#10;&#10;* **Negrito**&#10;* *Itálico*&#10;* [Links](https://...)"
+              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
           </div>
 
-          <div v-if="submitMessage" :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'" class="p-4 rounded-xl text-sm">
+          <div v-if="submitMessage"
+            :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
+            class="p-4 rounded-xl text-sm">
             {{ submitMessage }}
           </div>
 
           <div class="pt-4 flex justify-end gap-4">
-            <button type="button" @click="currentView = 'dashboard'" class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+            <button type="button" @click="currentView = 'dashboard'"
+              class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
               Cancelar
             </button>
-            <button type="submit" :disabled="isSubmitting" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
+            <button type="submit" :disabled="isSubmitting"
+              class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
               <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
-              <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Devocional') }}</span>
+              <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Devocional')
+                }}</span>
             </button>
           </div>
         </form>
       </div>
 
       <!-- Formulário de Novo Estudo -->
-      <div v-else-if="currentView === 'new_estudo'" class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+      <div v-else-if="currentView === 'new_estudo'"
+        class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
         <div class="border-b border-gray-100 dark:border-gray-800 p-6 flex items-center justify-between">
           <div class="flex items-center gap-4">
-            <button @click="currentView = 'dashboard'" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+            <button @click="currentView = 'dashboard'"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
               <Icon name="lucide:arrow-left" class="w-5 h-5" />
             </button>
             <h2 class="text-xl font-bold">{{ editingId ? 'Editar Estudo' : 'Criar Novo Estudo' }}</h2>
           </div>
         </div>
-        
+
         <form @submit.prevent="submitEstudo" class="p-6 md:p-8 space-y-6">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
-              <input v-model="estudoForm.titulo" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="estudoForm.titulo" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
-            
+
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra)</label>
-              <input v-model="estudoForm.tema" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="estudoForm.tema" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
           </div>
-          
+
           <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa (Opcional)</label>
-              <input v-model="estudoForm.imagemCapa" type="url" placeholder="https://..." class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-              <p class="text-xs text-gray-500 mt-1">Cole o link público da imagem. Pode ser do Google Drive (link direto).</p>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
+                (Opcional)</label>
+              <input v-model="estudoForm.imagemCapa" type="url" placeholder="https://..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <p class="text-xs text-gray-500 mt-1">Cole o link público da imagem. Pode ser do Google Drive (link
+                direto).</p>
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro</label>
-              <input v-model="estudoForm.livro" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="estudoForm.livro" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
-            
+
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capítulo</label>
-              <input v-model="estudoForm.capitulo" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="estudoForm.capitulo" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
 
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo(s)</label>
-              <input v-model="estudoForm.versiculos" type="text" required class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <input v-model="estudoForm.versiculos" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
           </div>
 
           <div class="space-y-1">
             <div class="flex items-center justify-between">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Estudo (Markdown suportado)</label>
-              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" class="text-xs text-primary-600 hover:underline flex items-center gap-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Estudo (Markdown
+                suportado)</label>
+              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
+                class="text-xs text-primary-600 hover:underline flex items-center gap-1">
                 <Icon name="lucide:help-circle" class="w-3 h-3" />
                 Guia de formatação
               </a>
             </div>
-            <textarea v-model="estudoForm.conteudo" required rows="15" placeholder="## Introdução&#10;&#10;Escreva o estudo detalhado..." class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
+            <textarea v-model="estudoForm.conteudo" required rows="15"
+              placeholder="## Introdução&#10;&#10;Escreva o estudo detalhado..."
+              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
           </div>
 
-          <div v-if="submitMessage" :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'" class="p-4 rounded-xl text-sm">
+          <div v-if="submitMessage"
+            :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
+            class="p-4 rounded-xl text-sm">
             {{ submitMessage }}
           </div>
 
           <div class="pt-4 flex justify-end gap-4">
-            <button type="button" @click="currentView = 'dashboard'" class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+            <button type="button" @click="currentView = 'dashboard'"
+              class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
               Cancelar
             </button>
-            <button type="submit" :disabled="isSubmitting" class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
+            <button type="submit" :disabled="isSubmitting"
+              class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
               <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
               <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Estudo') }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Formulário de Novo Material -->
+      <div v-else-if="currentView === 'new_material'"
+        class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="border-b border-gray-100 dark:border-gray-800 p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <button @click="currentView = 'dashboard'"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <Icon name="lucide:arrow-left" class="w-5 h-5" />
+            </button>
+            <h2 class="text-xl font-bold">{{ editingId ? 'Editar Material' : 'Cadastrar Novo Material' }}</h2>
+          </div>
+        </div>
+
+        <form @submit.prevent="submitMaterial" class="p-6 md:p-8 space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título do Produto /
+                Material</label>
+              <input v-model="materialForm.titulo" type="text" required placeholder="Ex: Guia de Estudo Beacon"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria</label>
+              <input v-model="materialForm.categoria" type="text" required
+                placeholder="Ex: E-Book, Livro Físico, Curso, Devocional"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Preço (R$)</label>
+              <input v-model.number="materialForm.preco" type="number" step="0.01" min="0" required placeholder="29.90"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link de Checkout / Compra
+                (Kiwify, Hotmart, Amazon, etc.)</label>
+              <input v-model="materialForm.urlCheckout" type="url" required placeholder="https://pay.kiwify.com.br/..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
+              (Opcional)</label>
+            <input v-model="materialForm.urlImagem" type="url" placeholder="https://..."
+              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            <p class="text-xs text-gray-500 mt-1">Se não preenchido, será exibido o design ilustrativo padrão.</p>
+          </div>
+
+          <div class="space-y-1">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição / Resumo do
+              Material</label>
+            <textarea v-model="materialForm.descricao" required rows="4"
+              placeholder="Aprenda a extrair o máximo das suas leituras bíblicas com este guia passo a passo..."
+              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y text-sm"></textarea>
+          </div>
+
+          <!-- Opções Booleanas: Destaque e Ativo -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700">
+            <label class="flex items-center gap-3 cursor-pointer select-none">
+              <input v-model="materialForm.destaque" type="checkbox"
+                class="w-5 h-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+              <div>
+                <span class="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-1.5">
+                  <Icon name="lucide:star" class="w-4 h-4 text-amber-500" />
+                  Produto em Destaque
+                </span>
+                <p class="text-xs text-gray-500">Exibir com selo de destaque e prioridade visual</p>
+              </div>
+            </label>
+
+            <label class="flex items-center gap-3 cursor-pointer select-none">
+              <input v-model="materialForm.ativo" type="checkbox"
+                class="w-5 h-5 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+              <div>
+                <span class="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-1.5">
+                  Material Ativo / Visível
+                </span>
+                <p class="text-xs text-gray-500">Deixe desmarcado se quiser ocultar temporariamente</p>
+              </div>
+            </label>
+          </div>
+
+          <div v-if="submitMessage"
+            :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
+            class="p-4 rounded-xl text-sm">
+            {{ submitMessage }}
+          </div>
+
+          <div class="pt-4 flex justify-end gap-4">
+            <button type="button" @click="currentView = 'dashboard'"
+              class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+              Cancelar
+            </button>
+            <button type="submit" :disabled="isSubmitting"
+              class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
+              <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
+              <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Cadastrar Material') }}</span>
             </button>
           </div>
         </form>
@@ -314,6 +529,7 @@ const devocionalForm = reactive({
 
 const devocionaisList = ref([])
 const estudosList = ref([])
+const materiaisList = ref([])
 const editingId = ref(null)
 
 const estudoForm = reactive({
@@ -326,9 +542,20 @@ const estudoForm = reactive({
   conteudo: ''
 })
 
+const materialForm = reactive({
+  titulo: '',
+  categoria: '',
+  preco: '',
+  urlCheckout: '',
+  urlImagem: '',
+  descricao: '',
+  destaque: false,
+  ativo: true
+})
+
 const fetchLists = async () => {
   if (!$firestore) return
-  
+
   try {
     // Buscar devocionais
     const devQ = query(collection($firestore, 'devocionais'), orderBy('createdAt', 'desc'))
@@ -339,6 +566,11 @@ const fetchLists = async () => {
     const estQ = query(collection($firestore, 'estudos'), orderBy('createdAt', 'desc'))
     const estSnap = await getDocs(estQ)
     estudosList.value = estSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+    // Buscar materiais
+    const matQ = query(collection($firestore, 'materiais'), orderBy('createdAt', 'desc'))
+    const matSnap = await getDocs(matQ)
+    materiaisList.value = matSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
   } catch (error) {
     console.error("Erro ao buscar listas:", error)
   }
@@ -415,7 +647,7 @@ const submitDevocional = async () => {
       await addDoc(collection($firestore, "devocionais"), data)
       submitMessage.value = "Devocional publicado com sucesso!"
     }
-    
+
     // Limpar form
     devocionalForm.titulo = ''
     devocionalForm.versiculo = ''
@@ -423,13 +655,13 @@ const submitDevocional = async () => {
     devocionalForm.conteudo = ''
     devocionalForm.livro = ''
     editingId.value = null
-    
+
     fetchLists()
     setTimeout(() => {
       submitMessage.value = ''
       currentView.value = 'dashboard'
     }, 2000)
-    
+
   } catch (e) {
     console.error("Erro ao salvar devocional: ", e)
     submitError.value = true
@@ -470,7 +702,7 @@ const submitEstudo = async () => {
       await addDoc(collection($firestore, "estudos"), data)
       submitMessage.value = "Estudo publicado com sucesso!"
     }
-    
+
     // Limpar form
     estudoForm.titulo = ''
     estudoForm.livro = ''
@@ -480,17 +712,76 @@ const submitEstudo = async () => {
     estudoForm.imagemCapa = ''
     estudoForm.conteudo = ''
     editingId.value = null
-    
+
     fetchLists()
     setTimeout(() => {
       submitMessage.value = ''
       currentView.value = 'dashboard'
     }, 2000)
-    
+
   } catch (e) {
     console.error("Erro ao salvar estudo: ", e)
     submitError.value = true
     submitMessage.value = "Erro ao salvar estudo. Tente novamente."
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const submitMaterial = async () => {
+  if (!$firestore) {
+    submitError.value = true
+    submitMessage.value = "Erro: Firestore não está conectado."
+    return
+  }
+
+  isSubmitting.value = true
+  submitError.value = false
+  submitMessage.value = ''
+
+  try {
+    const data = {
+      titulo: materialForm.titulo,
+      categoria: materialForm.categoria,
+      preco: Number(materialForm.preco) || 0,
+      urlCheckout: materialForm.urlCheckout,
+      urlImagem: materialForm.urlImagem || '',
+      descricao: materialForm.descricao,
+      destaque: Boolean(materialForm.destaque),
+      ativo: Boolean(materialForm.ativo)
+    }
+
+    if (editingId.value) {
+      const docRef = doc($firestore, "materiais", editingId.value)
+      await updateDoc(docRef, data)
+      submitMessage.value = "Material atualizado com sucesso!"
+    } else {
+      data.createdAt = serverTimestamp()
+      await addDoc(collection($firestore, "materiais"), data)
+      submitMessage.value = "Material cadastrado com sucesso!"
+    }
+
+    // Limpar form
+    materialForm.titulo = ''
+    materialForm.categoria = ''
+    materialForm.preco = ''
+    materialForm.urlCheckout = ''
+    materialForm.urlImagem = ''
+    materialForm.descricao = ''
+    materialForm.destaque = false
+    materialForm.ativo = true
+    editingId.value = null
+
+    fetchLists()
+    setTimeout(() => {
+      submitMessage.value = ''
+      currentView.value = 'dashboard'
+    }, 2000)
+
+  } catch (e) {
+    console.error("Erro ao salvar material: ", e)
+    submitError.value = true
+    submitMessage.value = "Erro ao salvar material. Tente novamente."
   } finally {
     isSubmitting.value = false
   }
@@ -512,6 +803,15 @@ const openForm = (viewName) => {
     estudoForm.tema = ''
     estudoForm.imagemCapa = ''
     estudoForm.conteudo = ''
+  } else if (viewName === 'new_material') {
+    materialForm.titulo = ''
+    materialForm.categoria = ''
+    materialForm.preco = ''
+    materialForm.urlCheckout = ''
+    materialForm.urlImagem = ''
+    materialForm.descricao = ''
+    materialForm.destaque = false
+    materialForm.ativo = true
   }
   currentView.value = viewName
 }
@@ -534,12 +834,22 @@ const editItem = (item, type) => {
     estudoForm.imagemCapa = item.imagemCapa || ''
     estudoForm.conteudo = item.conteudo || ''
     currentView.value = 'new_estudo'
+  } else if (type === 'material') {
+    materialForm.titulo = item.titulo || ''
+    materialForm.categoria = item.categoria || ''
+    materialForm.preco = item.preco ?? ''
+    materialForm.urlCheckout = item.urlCheckout || ''
+    materialForm.urlImagem = item.urlImagem || ''
+    materialForm.descricao = item.descricao || ''
+    materialForm.destaque = Boolean(item.destaque)
+    materialForm.ativo = item.ativo !== false
+    currentView.value = 'new_material'
   }
 }
 
 const deleteItem = async (id, collectionName) => {
   if (!confirm('Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.')) return
-  
+
   if (!$firestore) return
   try {
     await deleteDoc(doc($firestore, collectionName, id))
