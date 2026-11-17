@@ -1,0 +1,105 @@
+{
+  "seo": {
+    "siteName": "Viva a Bíblia",
+    "defaultTitle": "Viva a Bíblia | Devotionals & Studies",
+    "defaultDescription": "Free daily devotionals and theological studies based on Matthew Henry and Beacon Bible commentaries."
+  },
+  "nav": {
+    "devotionals": "Devotionals",
+    "studies": "Studies",
+    "materials": "Materials",
+    "about": "About",
+    "admin": "Admin",
+    "adminPanel": "Admin Panel",
+    "toggleTheme": "Toggle Theme",
+    "switchLanguage": "Switch language"
+  },
+  "footer": {
+    "description": "Sharing in-depth biblical knowledge and devotionals based on the commentaries of Matthew Henry and Beacon. For the edification of the Church.",
+    "quickLinks": "Quick Links",
+    "dailyDevotionals": "Daily Devotionals",
+    "support": "Support",
+    "buyMaterials": "Browse Materials",
+    "donations": "Donations",
+    "aboutProject": "About the Project",
+    "rights": "© {year} Viva a Bíblia. All rights reserved."
+  },
+  "common": {
+    "back": "Back",
+    "all": "All",
+    "adSpace": "Advertisement",
+    "adSense": "Advertisement (AdSense)",
+    "viewAll": "View all",
+    "readFullArticle": "Read full article",
+    "theologicalStudy": "Theological Study",
+    "free": "Free",
+    "access": "Access",
+    "featured": "Featured",
+    "material": "Material"
+  },
+  "home": {
+    "title": "Home",
+    "dailyDevotionalBadge": "Daily Devotional",
+    "readFullDevotional": "Read Full Devotional",
+    "fallbackTitleLine1": "Wisdom to",
+    "fallbackTitleLine2": "Live Biblical Principles",
+    "fallbackSubtitle": "Follow our daily devotionals grounded in the Word of God.",
+    "recentStudies": "Recent Studies",
+    "noStudies": "No studies published yet.",
+    "ctaTitle": "Deepen your knowledge",
+    "ctaDescription": "Explore our recommended materials and books to support your Bible studies and devotional life.",
+    "ctaButton": "Browse Materials"
+  },
+  "devotionals": {
+    "pageTitle": "Devotionals",
+    "heading": "Daily Devotionals",
+    "subtitle": "Reflections inspired by Matthew Henry's commentaries to edify your day.",
+    "empty": "No devotionals found.",
+    "notFoundTitle": "Devotional not found",
+    "notFoundDescription": "This content may have been removed or the link is incorrect.",
+    "backToList": "Back to devotionals",
+    "shareTitle": "Did this reflection bless you?",
+    "shareSubtitle": "Share it with your friends and family.",
+    "fallbackNotice": "This devotional is currently only available in Portuguese."
+  },
+  "studies": {
+    "pageTitle": "Theological Studies",
+    "heading": "Theological Studies",
+    "subtitle": "In-depth articles based on the Beacon Bible Commentary for your edification and spiritual growth.",
+    "empty": "No studies found.",
+    "notFoundTitle": "Study not found",
+    "notFoundDescription": "This content may have been removed or the link is incorrect.",
+    "backToList": "Back to studies",
+    "seoDescription": "Bible study in {book} {chapter}",
+    "footerTitle": "Was this study edifying?",
+    "footerDescription": "Go even deeper with our recommended study materials and books.",
+    "footerButton": "Browse Materials",
+    "fallbackNotice": "This study is currently only available in Portuguese."
+  },
+  "materials": {
+    "pageTitle": "Materials",
+    "heading": "Recommended Materials",
+    "subtitle": "Deepen your studies with our curated selection of digital resources, e-books, and study guides.",
+    "emptyTitle": "No materials available at the moment",
+    "emptyDescription": "We will soon add new books, e-books, and exclusive resources."
+  },
+  "about": {
+    "pageTitle": "About",
+    "heading": "About the Project",
+    "introBefore": "",
+    "introBrand": "Viva a Bíblia",
+    "introAfter": " was born from a desire to make deep theological knowledge and classic wisdom accessible to the modern believer.",
+    "missionTitle": "Our Mission",
+    "missionTextBefore": "We believe the Bible is the inerrant Word of God, and that diligent study of Scripture is essential for spiritual growth. Our goal is to share structured devotionals and Bible studies based on classic works such as the commentaries of ",
+    "missionMatthew": "Matthew Henry",
+    "missionAnd": " and the ",
+    "missionBeacon": "Beacon Bible Commentary",
+    "missionTextAfter": ".",
+    "contentTitle": "The Content",
+    "contentIntro": "All of our reading material is 100% free. We want you to have open access to:",
+    "contentDevotionalsLabel": "Daily Devotionals:",
+    "contentDevotionalsText": " Short reflections to apply in everyday life.",
+    "supportTitle": "How is the project sustained?",
+    "supportText": "To keep the site online and accessible to everyone, we use discreet ad placements (Google AdSense) and maintain a curated store with selected digital resources and affiliate links for edifying materials we recommend."
+  }
+}

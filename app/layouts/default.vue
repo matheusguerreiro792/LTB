@@ -6,7 +6,7 @@
       class="sticky top-0 z-50 w-full backdrop-blur-md bg-white/80 dark:bg-gray-950/80 border-b border-gray-200 dark:border-gray-800">
       <div class="container mx-auto px-4 h-16 flex items-center justify-between">
         <!-- Logo -->
-        <NuxtLink to="/" class="flex items-center gap-2 group font-noto-sans">
+        <NuxtLink :to="localePath('/')" class="flex items-center gap-2 group font-noto-sans">
           <img src="/VaB-logo.png" alt="Viva a Bíblia" class="h-14 w-auto">
           <span class="font-bold tracking-tight text-2xl text-gray-900 dark:text-white">Viva a
             <span class="text-primary-600 dark:text-primary-400">Bíblia</span></span>
@@ -14,27 +14,43 @@
 
         <!-- Desktop Nav -->
         <nav class="hidden md:flex items-center gap-8 font-medium">
-          <NuxtLink to="/devocionais" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            Devocionais</NuxtLink>
-          <!-- <NuxtLink to="/estudos" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Estudos</NuxtLink> -->
-          <NuxtLink to="/materiais" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
-            Materiais</NuxtLink>
-          <NuxtLink to="/sobre" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Sobre
+          <NuxtLink :to="localePath('/devocionais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {{ $t('nav.devotionals') }}</NuxtLink>
+          <!-- <NuxtLink :to="localePath('/estudos')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ $t('nav.studies') }}</NuxtLink> -->
+          <NuxtLink :to="localePath('/materiais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {{ $t('nav.materials') }}</NuxtLink>
+          <NuxtLink :to="localePath('/sobre')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ $t('nav.about') }}
           </NuxtLink>
         </nav>
 
         <!-- Actions -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          <!-- Language Switcher -->
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-0.5 text-xs font-semibold" :aria-label="$t('nav.switchLanguage')">
+            <NuxtLink
+              :to="switchLocalePath('pt-BR')"
+              :class="locale === 'pt-BR' ? 'bg-white dark:bg-gray-950 text-primary-600 dark:text-primary-400 shadow-xs' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
+              class="px-2.5 py-1 rounded-full transition-colors">
+              PT
+            </NuxtLink>
+            <NuxtLink
+              :to="switchLocalePath('en')"
+              :class="locale === 'en' ? 'bg-white dark:bg-gray-950 text-primary-600 dark:text-primary-400 shadow-xs' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
+              class="px-2.5 py-1 rounded-full transition-colors">
+              EN
+            </NuxtLink>
+          </div>
+
           <button @click="toggleTheme"
             class="p-2 flex rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Alternar Tema">
+            :aria-label="$t('nav.toggleTheme')">
             <Icon v-if="isDark" name="lucide:sun" class="w-5 h-5 text-gray-400 hover:text-yellow-400" />
             <Icon v-else name="lucide:moon" class="w-5 h-5 text-gray-500 hover:text-primary-600" />
           </button>
 
           <NuxtLink to="/admin"
             class="hidden md:flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-all hover:shadow-lg hover:shadow-primary-500/20 text-sm">
-            <span>Admin</span>
+            <span>{{ $t('nav.admin') }}</span>
             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </NuxtLink>
 
@@ -49,17 +65,17 @@
       <!-- Mobile Menu -->
       <div v-if="isMobileMenuOpen"
         class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 py-4 space-y-4">
-        <NuxtLink @click="isMobileMenuOpen = false" to="/devocionais" class="block font-medium hover:text-primary-600">
-          Devocionais</NuxtLink>
-        <NuxtLink @click="isMobileMenuOpen = false" to="/estudos" class="block font-medium hover:text-primary-600">
-          Estudos</NuxtLink>
-        <NuxtLink @click="isMobileMenuOpen = false" to="/materiais" class="block font-medium hover:text-primary-600">
-          Materiais</NuxtLink>
-        <NuxtLink @click="isMobileMenuOpen = false" to="/sobre" class="block font-medium hover:text-primary-600">Sobre
+        <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/devocionais')" class="block font-medium hover:text-primary-600">
+          {{ $t('nav.devotionals') }}</NuxtLink>
+        <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/estudos')" class="block font-medium hover:text-primary-600">
+          {{ $t('nav.studies') }}</NuxtLink>
+        <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/materiais')" class="block font-medium hover:text-primary-600">
+          {{ $t('nav.materials') }}</NuxtLink>
+        <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/sobre')" class="block font-medium hover:text-primary-600">{{ $t('nav.about') }}
         </NuxtLink>
         <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
           <NuxtLink @click="isMobileMenuOpen = false" to="/admin" class="flex items-center justify-between font-medium">
-            Painel Admin
+            {{ $t('nav.adminPanel') }}
             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </NuxtLink>
         </div>
@@ -76,36 +92,35 @@
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div class="md:col-span-2">
-            <NuxtLink to="/" class="flex items-center gap-2 group mb-4 font-noto-sans">
+            <NuxtLink :to="localePath('/')" class="flex items-center gap-2 group mb-4 font-noto-sans">
               <img src="/VaB-logo.png" alt="Viva a Bíblia" class="h-12 w-auto">
               <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">Viva a <span
                   class="text-primary-600 dark:text-primary-400">Bíblia</span></span>
             </NuxtLink>
             <p class="text-gray-500 dark:text-gray-400 text-sm max-w-sm leading-relaxed">
-              Compartilhando conhecimento bíblico e devocionais com profundidade, baseado nos comentários de Matthew
-              Henry e Beacon. Para a edificação da Igreja.
+              {{ $t('footer.description') }}
             </p>
           </div>
           <div>
-            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Link Rápido</h3>
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ $t('footer.quickLinks') }}</h3>
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
               <li>
-                <NuxtLink to="/devocionais" class="hover:text-primary-600 transition-colors">Devocionais Diários
+                <NuxtLink :to="localePath('/devocionais')" class="hover:text-primary-600 transition-colors">{{ $t('footer.dailyDevotionals') }}
                 </NuxtLink>
               </li>
-              <!-- <li><NuxtLink to="/estudos" class="hover:text-primary-600 transition-colors">Estudos Teológicos</NuxtLink></li> -->
-              <!-- <li><NuxtLink to="/materiais" class="hover:text-primary-600 transition-colors">Materiais</NuxtLink></li> -->
+              <!-- <li><NuxtLink :to="localePath('/estudos')" class="hover:text-primary-600 transition-colors">Estudos Teológicos</NuxtLink></li> -->
+              <!-- <li><NuxtLink :to="localePath('/materiais')" class="hover:text-primary-600 transition-colors">Materiais</NuxtLink></li> -->
             </ul>
           </div>
           <div>
-            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Apoie</h3>
+            <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ $t('footer.support') }}</h3>
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
               <li>
-                <NuxtLink to="/materiais" class="hover:text-primary-600 transition-colors">Adquirir Materiais</NuxtLink>
+                <NuxtLink :to="localePath('/materiais')" class="hover:text-primary-600 transition-colors">{{ $t('footer.buyMaterials') }}</NuxtLink>
               </li>
-              <li><a href="#" class="hover:text-primary-600 transition-colors">Doações</a></li>
+              <li><a href="#" class="hover:text-primary-600 transition-colors">{{ $t('footer.donations') }}</a></li>
               <li>
-                <NuxtLink to="/sobre" class="hover:text-primary-600 transition-colors">Sobre o Projeto</NuxtLink>
+                <NuxtLink :to="localePath('/sobre')" class="hover:text-primary-600 transition-colors">{{ $t('footer.aboutProject') }}</NuxtLink>
               </li>
             </ul>
           </div>
@@ -113,7 +128,7 @@
         <div
           class="border-t border-gray-200 dark:border-gray-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p class="text-xs text-gray-400">
-            &copy; {{ new Date().getFullYear() }} Viva a Bíblia. Todos os direitos reservados.
+            {{ $t('footer.rights', { year: new Date().getFullYear() }) }}
           </p>
           <!-- <div class="flex items-center gap-4 text-gray-400">
             <a href="#" class="hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -131,6 +146,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+
+const { locale } = useI18n()
+const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath()
 
 const isMobileMenuOpen = ref(false)
 const isDark = ref(false)

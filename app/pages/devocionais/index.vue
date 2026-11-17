@@ -1,18 +1,18 @@
 <template>
   <div class="container mx-auto px-4 py-8 md:py-12 max-w-4xl space-y-8">
     <header class="space-y-4">
-      <h1 class="text-3xl md:text-4xl font-bold">Devocionais Diários</h1>
+      <h1 class="text-3xl md:text-4xl font-bold">{{ $t('devotionals.heading') }}</h1>
       <p class="text-gray-600 dark:text-gray-400 text-lg">
-        Reflexões inspiradas nos comentários de Matthew Henry para edificar o seu dia.
+        {{ $t('devotionals.subtitle') }}
       </p>
       
       <!-- Filtros -->
       <div class="flex items-center gap-2 pt-4 overflow-x-auto pb-2 scrollbar-hide">
         <button 
-          @click="selectedFilter = 'Todos'"
-          :class="selectedFilter === 'Todos' ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'"
+          @click="selectedFilter = 'ALL'"
+          :class="selectedFilter === 'ALL' ? 'bg-primary-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'"
           class="px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors">
-          Todos
+          {{ $t('common.all') }}
         </button>
         <button 
           v-for="livro in availableBooks" :key="livro"
@@ -25,7 +25,7 @@
     </header>
 
     <div class="ad-slot-fluid my-8">
-      <span class="text-xs text-gray-400 uppercase tracking-wider">Espaço Publicitário</span>
+      <span class="text-xs text-gray-400 uppercase tracking-wider">{{ $t('common.adSpace') }}</span>
     </div>
 
     <!-- Lista de Devocionais -->
@@ -34,11 +34,11 @@
     </div>
     
     <div v-else-if="filteredDevocionais.length === 0" class="text-center py-12 text-gray-500">
-      Nenhum devocional encontrado.
+      {{ $t('devotionals.empty') }}
     </div>
 
     <div v-else class="space-y-6">
-      <NuxtLink v-for="dev in filteredDevocionais" :key="dev.id" :to="`/devocionais/${dev.id}`" class="block outline-none focus:ring-2 focus:ring-primary-500 rounded-2xl">
+      <NuxtLink v-for="dev in filteredDevocionais" :key="dev.id" :to="localePath(`/devocionais/${dev.id}`)" class="block outline-none focus:ring-2 focus:ring-primary-500 rounded-2xl">
         <article class="flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow group cursor-pointer h-full">
           <div class="flex-shrink-0 w-16 h-16 rounded-xl bg-primary-50 dark:bg-primary-900/30 flex flex-col items-center justify-center text-primary-600 dark:text-primary-400">
             <span class="text-xs font-bold uppercase">{{ formatDate(dev.createdAt).month }}</span>
@@ -65,18 +65,25 @@
 import { ref, computed } from 'vue'
 import { marked } from 'marked'
 
-useHead({
-  title: 'Devocionais',
-})
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
+
+useHead(() => ({
+  title: t('devotionals.pageTitle'),
+}))
 
 const { data: devocionaisData, pending: isLoading } = await useFetch('/api/devocionais', {
   key: 'devocionais-list',
   default: () => []
 })
 
-const selectedFilter = ref('Todos')
+const selectedFilter = ref('ALL')
 
-const devocionais = computed(() => devocionaisData.value || [])
+const devocionais = computed(() => {
+  return (devocionaisData.value || [])
+    .filter(d => hasDocTranslation(d, locale.value))
+    .map(d => useLocalizedDoc(d, locale.value))
+})
 
 // Extrair lista única de livros
 const availableBooks = computed(() => {
@@ -86,7 +93,7 @@ const availableBooks = computed(() => {
 
 // Filtragem
 const filteredDevocionais = computed(() => {
-  if (selectedFilter.value === 'Todos') {
+  if (selectedFilter.value === 'ALL') {
     return devocionais.value
   }
   return devocionais.value.filter(d => d.livro === selectedFilter.value)
@@ -95,7 +102,7 @@ const filteredDevocionais = computed(() => {
 const formatDate = (dateStr) => {
   if (!dateStr) return { day: '', month: '' }
   const date = new Date(dateStr)
-  const month = date.toLocaleString('pt-BR', { month: 'short' }).replace('.', '').toUpperCase().substring(0, 3)
+  const month = date.toLocaleString(locale.value, { month: 'short' }).replace('.', '').toUpperCase().substring(0, 3)
   const day = date.getDate().toString().padStart(2, '0')
   return { month, day }
 }

@@ -31,8 +31,30 @@ export default defineNuxtConfig({
   },
   
   modules: [
-    '@nuxt/icon'
+    '@nuxt/icon',
+    '@nuxtjs/i18n'
   ],
+
+  i18n: {
+    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://vivaabiblia.com.br',
+    defaultLocale: 'pt-BR',
+    strategy: 'prefix_except_default',
+    detectBrowserLanguage: false,
+    locales: [
+      { code: 'pt-BR', language: 'pt-BR', name: 'Português', file: 'pt-BR.json' },
+      { code: 'en', language: 'en-US', name: 'English', file: 'en-US.json' }
+    ],
+    customRoutes: 'config',
+    pages: {
+      'devocionais/index': { 'pt-BR': '/devocionais', en: '/devotionals' },
+      'devocionais/[id]': { 'pt-BR': '/devocionais/[id]', en: '/devotionals/[id]' },
+      'estudos/index': { 'pt-BR': '/estudos', en: '/studies' },
+      'estudos/[id]': { 'pt-BR': '/estudos/[id]', en: '/studies/[id]' },
+      materiais: { 'pt-BR': '/materiais', en: '/materials' },
+      sobre: { 'pt-BR': '/sobre', en: '/about' },
+      admin: { 'pt-BR': '/admin', en: false }
+    }
+  },
 
   routeRules: {
     '/': { isr: 3600 },
@@ -42,6 +64,14 @@ export default defineNuxtConfig({
     '/estudos': { isr: 3600 },
     '/estudos/**': { isr: 3600 },
     '/sobre': { prerender: true },
+
+    '/en': { isr: 3600 },
+    '/en/materials': { isr: 3600 },
+    '/en/devotionals': { isr: 3600 },
+    '/en/devotionals/**': { isr: 3600 },
+    '/en/studies': { isr: 3600 },
+    '/en/studies/**': { isr: 3600 },
+    '/en/about': { prerender: true },
 
     '/api/**': {
       swr: 3600,

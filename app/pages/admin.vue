@@ -219,54 +219,108 @@
             </button>
             <h2 class="text-xl font-bold">{{ editingId ? 'Editar Devocional' : 'Criar Novo Devocional' }}</h2>
           </div>
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-xl p-1 text-xs font-semibold">
+            <button type="button" @click="formLang = 'pt-BR'"
+              :class="formLang === 'pt-BR' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              Português (PT-BR)
+            </button>
+            <button type="button" @click="formLang = 'en-US'"
+              :class="formLang === 'en-US' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              English (EN-US)
+            </button>
+          </div>
         </div>
 
         <form @submit.prevent="submitDevocional" class="p-6 md:p-8 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
-              <input v-model="devocionalForm.titulo" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+          <template v-if="formLang === 'pt-BR'">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
+                <input v-model="devocionalForm.titulo" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro Bíblico (Ex:
+                  Salmos)</label>
+                <input v-model="devocionalForm.livro" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 - "No
+                  dia em que eu...")</label>
+                <input v-model="devocionalForm.versiculo" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra, Ex:
+                  Confiança)</label>
+                <input v-model="devocionalForm.tema" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro Bíblico (Ex:
-                Salmos)</label>
-              <input v-model="devocionalForm.livro" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <div class="flex items-center justify-between">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional (Markdown
+                  suportado)</label>
+                <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
+                  class="text-xs text-primary-600 hover:underline flex items-center gap-1">
+                  <Icon name="lucide:help-circle" class="w-3 h-3" />
+                  Guia de formatação
+                </a>
+              </div>
+              <textarea v-model="devocionalForm.conteudo" required rows="12"
+                placeholder="## Título principal&#10;&#10;Escreva o seu texto aqui usando marcação...&#10;&#10;* **Negrito**&#10;* *Itálico*&#10;* [Links](https://...)"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
             </div>
-          </div>
+          </template>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <template v-else>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Campos opcionais em inglês americano (en-US). Se preenchidos, o devocional aparecerá automaticamente na versão em inglês.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title (EN-US)</label>
+                <input v-model="devocionalForm.en.titulo" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bible Book (Ex: Psalms)</label>
+                <input v-model="devocionalForm.en.livro" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Verse (EN-US)</label>
+                <input v-model="devocionalForm.en.versiculo" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Topic (Ex: Trust)</label>
+                <input v-model="devocionalForm.en.tema" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 - "No
-                dia em que eu...")</label>
-              <input v-model="devocionalForm.versiculo" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Devotional Content (Markdown - EN-US)</label>
+              <textarea v-model="devocionalForm.en.conteudo" rows="12"
+                placeholder="## Main title&#10;&#10;Write the English version here..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
             </div>
-
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra, Ex:
-                Confiança)</label>
-              <input v-model="devocionalForm.tema" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <div class="flex items-center justify-between">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional (Markdown
-                suportado)</label>
-              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
-                class="text-xs text-primary-600 hover:underline flex items-center gap-1">
-                <Icon name="lucide:help-circle" class="w-3 h-3" />
-                Guia de formatação
-              </a>
-            </div>
-            <textarea v-model="devocionalForm.conteudo" required rows="12"
-              placeholder="## Título principal&#10;&#10;Escreva o seu texto aqui usando marcação...&#10;&#10;* **Negrito**&#10;* *Itálico*&#10;* [Links](https://...)"
-              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
-          </div>
+          </template>
 
           <div v-if="submitMessage"
             :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
@@ -300,68 +354,136 @@
             </button>
             <h2 class="text-xl font-bold">{{ editingId ? 'Editar Estudo' : 'Criar Novo Estudo' }}</h2>
           </div>
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-xl p-1 text-xs font-semibold">
+            <button type="button" @click="formLang = 'pt-BR'"
+              :class="formLang === 'pt-BR' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              Português (PT-BR)
+            </button>
+            <button type="button" @click="formLang = 'en-US'"
+              :class="formLang === 'en-US' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              English (EN-US)
+            </button>
+          </div>
         </div>
 
         <form @submit.prevent="submitEstudo" class="p-6 md:p-8 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
-              <input v-model="estudoForm.titulo" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+          <template v-if="formLang === 'pt-BR'">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
+                <input v-model="estudoForm.titulo" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra)</label>
+                <input v-model="estudoForm.tema" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
+                  (Opcional)</label>
+                <input v-model="estudoForm.imagemCapa" type="url" placeholder="https://..."
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+                <p class="text-xs text-gray-500 mt-1">Cole o link público da imagem. Pode ser do Google Drive (link
+                  direto).</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro</label>
+                <input v-model="estudoForm.livro" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capítulo</label>
+                <input v-model="estudoForm.capitulo" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo(s)</label>
+                <input v-model="estudoForm.versiculos" type="text" required
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tema (Uma palavra)</label>
-              <input v-model="estudoForm.tema" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <div class="flex items-center justify-between">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Estudo (Markdown
+                  suportado)</label>
+                <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
+                  class="text-xs text-primary-600 hover:underline flex items-center gap-1">
+                  <Icon name="lucide:help-circle" class="w-3 h-3" />
+                  Guia de formatação
+                </a>
+              </div>
+              <textarea v-model="estudoForm.conteudo" required rows="15"
+                placeholder="## Introdução&#10;&#10;Escreva o estudo detalhado..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
             </div>
-          </div>
+          </template>
 
-          <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+          <template v-else>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Campos opcionais em inglês americano (en-US).
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title (EN-US)</label>
+                <input v-model="estudoForm.en.titulo" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Topic (EN-US)</label>
+                <input v-model="estudoForm.en.tema" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional - EN-US)</label>
+                <input v-model="estudoForm.en.imagemCapa" type="url" placeholder="https://..."
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Book (EN-US)</label>
+                <input v-model="estudoForm.en.livro" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Chapter (EN-US)</label>
+                <input v-model="estudoForm.en.capitulo" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Verse(s) (EN-US)</label>
+                <input v-model="estudoForm.en.versiculos" type="text"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
-                (Opcional)</label>
-              <input v-model="estudoForm.imagemCapa" type="url" placeholder="https://..."
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-              <p class="text-xs text-gray-500 mt-1">Cole o link público da imagem. Pode ser do Google Drive (link
-                direto).</p>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Study Content (Markdown - EN-US)</label>
+              <textarea v-model="estudoForm.en.conteudo" rows="15"
+                placeholder="## Introduction&#10;&#10;Write the English study here..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Livro</label>
-              <input v-model="estudoForm.livro" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Capítulo</label>
-              <input v-model="estudoForm.capitulo" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo(s)</label>
-              <input v-model="estudoForm.versiculos" type="text" required
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <div class="flex items-center justify-between">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Estudo (Markdown
-                suportado)</label>
-              <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
-                class="text-xs text-primary-600 hover:underline flex items-center gap-1">
-                <Icon name="lucide:help-circle" class="w-3 h-3" />
-                Guia de formatação
-              </a>
-            </div>
-            <textarea v-model="estudoForm.conteudo" required rows="15"
-              placeholder="## Introdução&#10;&#10;Escreva o estudo detalhado..."
-              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
-          </div>
+          </template>
 
           <div v-if="submitMessage"
             :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
@@ -394,55 +516,115 @@
             </button>
             <h2 class="text-xl font-bold">{{ editingId ? 'Editar Material' : 'Cadastrar Novo Material' }}</h2>
           </div>
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-xl p-1 text-xs font-semibold">
+            <button type="button" @click="formLang = 'pt-BR'"
+              :class="formLang === 'pt-BR' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              Português (PT-BR)
+            </button>
+            <button type="button" @click="formLang = 'en-US'"
+              :class="formLang === 'en-US' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              English (EN-US)
+            </button>
+          </div>
         </div>
 
         <form @submit.prevent="submitMaterial" class="p-6 md:p-8 space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <template v-if="formLang === 'pt-BR'">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título do Produto /
+                  Material</label>
+                <input v-model="materialForm.titulo" type="text" required placeholder="Ex: Guia de Estudo Beacon"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria</label>
+                <input v-model="materialForm.categoria" type="text" required
+                  placeholder="Ex: E-Book, Livro Físico, Curso, Devocional"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Preço (R$)</label>
+                <input v-model.number="materialForm.preco" type="number" step="0.01" min="0" required placeholder="29.90"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link de Checkout / Compra
+                  (Kiwify, Hotmart, Amazon, etc.)</label>
+                <input v-model="materialForm.urlCheckout" type="url" required placeholder="https://pay.kiwify.com.br/..."
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título do Produto /
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
+                (Opcional)</label>
+              <input v-model="materialForm.urlImagem" type="url" placeholder="https://..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <p class="text-xs text-gray-500 mt-1">Se não preenchido, será exibido o design ilustrativo padrão.</p>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição / Resumo do
                 Material</label>
-              <input v-model="materialForm.titulo" type="text" required placeholder="Ex: Guia de Estudo Beacon"
+              <textarea v-model="materialForm.descricao" required rows="4"
+                placeholder="Aprenda a extrair o máximo das suas leituras bíblicas com este guia passo a passo..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y text-sm"></textarea>
+            </div>
+          </template>
+
+          <template v-else>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Campos opcionais em inglês americano (en-US).
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product / Material Title (EN-US)</label>
+                <input v-model="materialForm.en.titulo" type="text" placeholder="Ex: Beacon Study Guide"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Category (EN-US)</label>
+                <input v-model="materialForm.en.categoria" type="text" placeholder="Ex: E-Book, Book, Course"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price (USD $)</label>
+                <input v-model.number="materialForm.en.preco" type="number" step="0.01" min="0" placeholder="9.90"
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+
+              <div class="space-y-1">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Checkout / Purchase Link (EN-US)</label>
+                <input v-model="materialForm.en.urlCheckout" type="url" placeholder="https://..."
+                  class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional - EN-US)</label>
+              <input v-model="materialForm.en.urlImagem" type="url" placeholder="https://..."
                 class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoria</label>
-              <input v-model="materialForm.categoria" type="text" required
-                placeholder="Ex: E-Book, Livro Físico, Curso, Devocional"
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN-US)</label>
+              <textarea v-model="materialForm.en.descricao" rows="4"
+                placeholder="Write the English description here..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y text-sm"></textarea>
             </div>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Preço (R$)</label>
-              <input v-model.number="materialForm.preco" type="number" step="0.01" min="0" required placeholder="29.90"
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-
-            <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link de Checkout / Compra
-                (Kiwify, Hotmart, Amazon, etc.)</label>
-              <input v-model="materialForm.urlCheckout" type="url" required placeholder="https://pay.kiwify.com.br/..."
-                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">URL da Imagem de Capa
-              (Opcional)</label>
-            <input v-model="materialForm.urlImagem" type="url" placeholder="https://..."
-              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
-            <p class="text-xs text-gray-500 mt-1">Se não preenchido, será exibido o design ilustrativo padrão.</p>
-          </div>
-
-          <div class="space-y-1">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descrição / Resumo do
-              Material</label>
-            <textarea v-model="materialForm.descricao" required rows="4"
-              placeholder="Aprenda a extrair o máximo das suas leituras bíblicas com este guia passo a passo..."
-              class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y text-sm"></textarea>
-          </div>
+          </template>
 
           <!-- Opções Booleanas: Destaque e Ativo -->
           <div
@@ -519,12 +701,21 @@ const isSubmitting = ref(false)
 const submitMessage = ref('')
 const submitError = ref(false)
 
+const formLang = ref('pt-BR')
+
 const devocionalForm = reactive({
   titulo: '',
   livro: '',
   versiculo: '',
   tema: '',
-  conteudo: ''
+  conteudo: '',
+  en: {
+    titulo: '',
+    livro: '',
+    versiculo: '',
+    tema: '',
+    conteudo: ''
+  }
 })
 
 const devocionaisList = ref([])
@@ -539,7 +730,16 @@ const estudoForm = reactive({
   versiculos: '',
   tema: '',
   imagemCapa: '',
-  conteudo: ''
+  conteudo: '',
+  en: {
+    titulo: '',
+    livro: '',
+    capitulo: '',
+    versiculos: '',
+    tema: '',
+    imagemCapa: '',
+    conteudo: ''
+  }
 })
 
 const materialForm = reactive({
@@ -550,8 +750,34 @@ const materialForm = reactive({
   urlImagem: '',
   descricao: '',
   destaque: false,
-  ativo: true
+  ativo: true,
+  en: {
+    titulo: '',
+    categoria: '',
+    preco: '',
+    urlCheckout: '',
+    urlImagem: '',
+    descricao: ''
+  }
 })
+
+const buildTranslationsPayload = (enObj) => {
+  const cleaned = {}
+  for (const [k, v] of Object.entries(enObj || {})) {
+    if (typeof v === 'string' && v.trim() !== '') {
+      cleaned[k] = v.trim()
+    } else if (typeof v === 'number' && !Number.isNaN(v)) {
+      cleaned[k] = v
+    }
+  }
+  return Object.keys(cleaned).length > 0 ? { 'en-US': cleaned } : {}
+}
+
+const resetEnFields = (enObj) => {
+  for (const key of Object.keys(enObj)) {
+    enObj[key] = ''
+  }
+}
 
 const fetchLists = async () => {
   if (!$firestore) return
@@ -636,6 +862,7 @@ const submitDevocional = async () => {
       versiculo: devocionalForm.versiculo,
       tema: devocionalForm.tema,
       conteudo: devocionalForm.conteudo,
+      translations: buildTranslationsPayload(devocionalForm.en),
     }
 
     if (editingId.value) {
@@ -654,6 +881,8 @@ const submitDevocional = async () => {
     devocionalForm.tema = ''
     devocionalForm.conteudo = ''
     devocionalForm.livro = ''
+    resetEnFields(devocionalForm.en)
+    formLang.value = 'pt-BR'
     editingId.value = null
 
     fetchLists()
@@ -691,6 +920,7 @@ const submitEstudo = async () => {
       tema: estudoForm.tema,
       imagemCapa: estudoForm.imagemCapa || '',
       conteudo: estudoForm.conteudo,
+      translations: buildTranslationsPayload(estudoForm.en),
     }
 
     if (editingId.value) {
@@ -711,6 +941,8 @@ const submitEstudo = async () => {
     estudoForm.tema = ''
     estudoForm.imagemCapa = ''
     estudoForm.conteudo = ''
+    resetEnFields(estudoForm.en)
+    formLang.value = 'pt-BR'
     editingId.value = null
 
     fetchLists()
@@ -748,7 +980,8 @@ const submitMaterial = async () => {
       urlImagem: materialForm.urlImagem || '',
       descricao: materialForm.descricao,
       destaque: Boolean(materialForm.destaque),
-      ativo: Boolean(materialForm.ativo)
+      ativo: Boolean(materialForm.ativo),
+      translations: buildTranslationsPayload(materialForm.en)
     }
 
     if (editingId.value) {
@@ -770,6 +1003,8 @@ const submitMaterial = async () => {
     materialForm.descricao = ''
     materialForm.destaque = false
     materialForm.ativo = true
+    resetEnFields(materialForm.en)
+    formLang.value = 'pt-BR'
     editingId.value = null
 
     fetchLists()
@@ -789,12 +1024,14 @@ const submitMaterial = async () => {
 
 const openForm = (viewName) => {
   editingId.value = null
+  formLang.value = 'pt-BR'
   if (viewName === 'new_devocional') {
     devocionalForm.titulo = ''
     devocionalForm.livro = ''
     devocionalForm.versiculo = ''
     devocionalForm.tema = ''
     devocionalForm.conteudo = ''
+    resetEnFields(devocionalForm.en)
   } else if (viewName === 'new_estudo') {
     estudoForm.titulo = ''
     estudoForm.livro = ''
@@ -803,6 +1040,7 @@ const openForm = (viewName) => {
     estudoForm.tema = ''
     estudoForm.imagemCapa = ''
     estudoForm.conteudo = ''
+    resetEnFields(estudoForm.en)
   } else if (viewName === 'new_material') {
     materialForm.titulo = ''
     materialForm.categoria = ''
@@ -812,18 +1050,26 @@ const openForm = (viewName) => {
     materialForm.descricao = ''
     materialForm.destaque = false
     materialForm.ativo = true
+    resetEnFields(materialForm.en)
   }
   currentView.value = viewName
 }
 
 const editItem = (item, type) => {
   editingId.value = item.id
+  formLang.value = 'pt-BR'
+  const en = item.translations?.['en-US'] || {}
   if (type === 'devocional') {
     devocionalForm.titulo = item.titulo || ''
     devocionalForm.livro = item.livro || ''
     devocionalForm.versiculo = item.versiculo || ''
     devocionalForm.tema = item.tema || ''
     devocionalForm.conteudo = item.conteudo || ''
+    devocionalForm.en.titulo = en.titulo || ''
+    devocionalForm.en.livro = en.livro || ''
+    devocionalForm.en.versiculo = en.versiculo || ''
+    devocionalForm.en.tema = en.tema || ''
+    devocionalForm.en.conteudo = en.conteudo || ''
     currentView.value = 'new_devocional'
   } else if (type === 'estudo') {
     estudoForm.titulo = item.titulo || ''
@@ -833,6 +1079,13 @@ const editItem = (item, type) => {
     estudoForm.tema = item.tema || ''
     estudoForm.imagemCapa = item.imagemCapa || ''
     estudoForm.conteudo = item.conteudo || ''
+    estudoForm.en.titulo = en.titulo || ''
+    estudoForm.en.livro = en.livro || ''
+    estudoForm.en.capitulo = en.capitulo || ''
+    estudoForm.en.versiculos = en.versiculos || ''
+    estudoForm.en.tema = en.tema || ''
+    estudoForm.en.imagemCapa = en.imagemCapa || ''
+    estudoForm.en.conteudo = en.conteudo || ''
     currentView.value = 'new_estudo'
   } else if (type === 'material') {
     materialForm.titulo = item.titulo || ''
@@ -843,6 +1096,12 @@ const editItem = (item, type) => {
     materialForm.descricao = item.descricao || ''
     materialForm.destaque = Boolean(item.destaque)
     materialForm.ativo = item.ativo !== false
+    materialForm.en.titulo = en.titulo || ''
+    materialForm.en.categoria = en.categoria || ''
+    materialForm.en.preco = en.preco ?? ''
+    materialForm.en.urlCheckout = en.urlCheckout || ''
+    materialForm.en.urlImagem = en.urlImagem || ''
+    materialForm.en.descricao = en.descricao || ''
     currentView.value = 'new_material'
   }
 }

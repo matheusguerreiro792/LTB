@@ -1,0 +1,105 @@
+{
+  "seo": {
+    "siteName": "Viva a Bíblia",
+    "defaultTitle": "Viva a Bíblia | Devocionais & Estudos",
+    "defaultDescription": "Devocionais diários e estudos teológicos gratuitos baseados em comentários de Matthew Henry e Beacon."
+  },
+  "nav": {
+    "devotionals": "Devocionais",
+    "studies": "Estudos",
+    "materials": "Materiais",
+    "about": "Sobre",
+    "admin": "Admin",
+    "adminPanel": "Painel Admin",
+    "toggleTheme": "Alternar Tema",
+    "switchLanguage": "Mudar idioma"
+  },
+  "footer": {
+    "description": "Compartilhando conhecimento bíblico e devocionais com profundidade, baseado nos comentários de Matthew Henry e Beacon. Para a edificação da Igreja.",
+    "quickLinks": "Link Rápido",
+    "dailyDevotionals": "Devocionais Diários",
+    "support": "Apoie",
+    "buyMaterials": "Adquirir Materiais",
+    "donations": "Doações",
+    "aboutProject": "Sobre o Projeto",
+    "rights": "© {year} Viva a Bíblia. Todos os direitos reservados."
+  },
+  "common": {
+    "back": "Voltar",
+    "all": "Todos",
+    "adSpace": "Espaço Publicitário",
+    "adSense": "Anúncio (AdSense)",
+    "viewAll": "Ver todos",
+    "readFullArticle": "Ler artigo completo",
+    "theologicalStudy": "Estudo Teológico",
+    "free": "Gratuito",
+    "access": "Acessar",
+    "featured": "Destaque",
+    "material": "Material"
+  },
+  "home": {
+    "title": "Início",
+    "dailyDevotionalBadge": "Devocional do Dia",
+    "readFullDevotional": "Ler Devocional Completo",
+    "fallbackTitleLine1": "A Sabedoria para",
+    "fallbackTitleLine2": "Viver os Princípios Bíblicos",
+    "fallbackSubtitle": "Acompanhe nossos devocionais diários baseados na palavra de Deus.",
+    "recentStudies": "Estudos Recentes",
+    "noStudies": "Nenhum estudo publicado ainda.",
+    "ctaTitle": "Aprofunde seu conhecimento",
+    "ctaDescription": "Conheça nossos materiais e livros recomendados para auxiliar nos seus estudos bíblicos e vida devocional.",
+    "ctaButton": "Acessar Materiais"
+  },
+  "devotionals": {
+    "pageTitle": "Devocionais",
+    "heading": "Devocionais Diários",
+    "subtitle": "Reflexões inspiradas nos comentários de Matthew Henry para edificar o seu dia.",
+    "empty": "Nenhum devocional encontrado.",
+    "notFoundTitle": "Devocional não encontrado",
+    "notFoundDescription": "Este conteúdo pode ter sido removido ou o link está incorreto.",
+    "backToList": "Voltar para devocionais",
+    "shareTitle": "Gostou desta reflexão?",
+    "shareSubtitle": "Compartilhe com seus amigos e familiares.",
+    "fallbackNotice": ""
+  },
+  "studies": {
+    "pageTitle": "Estudos Teológicos",
+    "heading": "Estudos Teológicos",
+    "subtitle": "Artigos profundos baseados nos comentários Bíblicos Beacon para sua edificação e crescimento espiritual.",
+    "empty": "Nenhum estudo encontrado.",
+    "notFoundTitle": "Estudo não encontrado",
+    "notFoundDescription": "Este conteúdo pode ter sido removido ou o link está incorreto.",
+    "backToList": "Voltar para estudos",
+    "seoDescription": "Estudo bíblico em {book} {chapter}",
+    "footerTitle": "Edificou sua vida?",
+    "footerDescription": "Aprofunde ainda mais seus conhecimentos com nossos materiais e livros recomendados para estudo.",
+    "footerButton": "Acessar Materiais",
+    "fallbackNotice": ""
+  },
+  "materials": {
+    "pageTitle": "Materiais",
+    "heading": "Materiais Recomendados",
+    "subtitle": "Aprofunde seus estudos com nossa seleção de infoprodutos, e-books e materiais recomendados.",
+    "emptyTitle": "Nenhum material disponível no momento",
+    "emptyDescription": "Em breve adicionaremos novos livros, e-books e conteúdos exclusivos."
+  },
+  "about": {
+    "pageTitle": "Sobre",
+    "heading": "Sobre o Projeto",
+    "introBefore": "O ",
+    "introBrand": "Viva a Bíblia",
+    "introAfter": " nasceu do desejo de tornar acessível o conhecimento teológico profundo e a sabedoria dos clássicos para o crente moderno.",
+    "missionTitle": "Nossa Missão",
+    "missionTextBefore": "Acreditamos que a Bíblia é a palavra inerrante de Deus, e que o estudo diligente das escrituras é essencial para o crescimento espiritual. Nosso objetivo é compartilhar devocionais e estudos bíblicos estruturados, baseados em obras clássicas como os comentários de ",
+    "missionMatthew": "Matthew Henry",
+    "missionAnd": " e o ",
+    "missionBeacon": "Comentário Bíblico Beacon",
+    "missionTextAfter": ".",
+    "contentTitle": "O Conteúdo",
+    "contentIntro": "Todo o nosso material de leitura é 100% gratuito. Queremos que você tenha acesso livre a:",
+    "contentDevotionalsLabel": "Devocionais Diários:",
+    "contentDevotionalsText": " Reflexões curtas para aplicar no dia a dia.",
+    "supportTitle": "Como o projeto se mantém?",
+    "supportText": "Para manter o site no ar e acessível a todos, utilizamos espaços discretos para anúncios (Google AdSense) e mantemos uma loja com infoprodutos selecionados e links de afiliados para materiais edificantes que recomendamos."
+  }
+}

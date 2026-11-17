@@ -8,22 +8,29 @@
       <div class="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mx-auto text-gray-400">
         <Icon name="lucide:file-x" class="w-8 h-8" />
       </div>
-      <h2 class="text-2xl font-bold">Estudo não encontrado</h2>
-      <p class="text-gray-500">Este conteúdo pode ter sido removido ou o link está incorreto.</p>
-      <NuxtLink to="/estudos" class="inline-flex items-center gap-2 text-primary-600 font-medium hover:underline pt-4">
-        <Icon name="lucide:arrow-left" class="w-4 h-4" /> Voltar para estudos
+      <h2 class="text-2xl font-bold">{{ $t('studies.notFoundTitle') }}</h2>
+      <p class="text-gray-500">{{ $t('studies.notFoundDescription') }}</p>
+      <NuxtLink :to="localePath('/estudos')" class="inline-flex items-center gap-2 text-primary-600 font-medium hover:underline pt-4">
+        <Icon name="lucide:arrow-left" class="w-4 h-4" /> {{ $t('studies.backToList') }}
       </NuxtLink>
     </div>
 
     <article v-else class="space-y-10">
-      <NuxtLink to="/estudos" class="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors text-sm font-medium mb-4">
-        <Icon name="lucide:arrow-left" class="w-4 h-4" /> Voltar
+      <NuxtLink :to="localePath('/estudos')" class="inline-flex items-center gap-2 text-gray-500 hover:text-primary-600 transition-colors text-sm font-medium mb-4">
+        <Icon name="lucide:arrow-left" class="w-4 h-4" /> {{ $t('common.back') }}
       </NuxtLink>
+
+      <!-- Aviso discreto quando ainda não há tradução no idioma atual -->
+      <div v-if="estudo._isFallback && $t('studies.fallbackNotice')"
+        class="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60 text-amber-800 dark:text-amber-200 text-sm">
+        <Icon name="lucide:languages" class="w-4 h-4 shrink-0" />
+        <span>{{ $t('studies.fallbackNotice') }}</span>
+      </div>
 
       <header class="space-y-6">
         <div class="flex flex-wrap items-center gap-3">
           <span class="px-3 py-1 bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 text-xs font-bold uppercase tracking-wider rounded-full">
-            {{ estudo.tema || 'Estudo Teológico' }}
+            {{ estudo.tema || $t('common.theologicalStudy') }}
           </span>
           <span class="text-gray-400 dark:text-gray-500 text-sm flex items-center gap-1 ml-auto">
             <Icon name="lucide:calendar" class="w-4 h-4" />
@@ -47,7 +54,7 @@
       </div>
 
       <div class="ad-slot-fluid my-8">
-        <span class="text-xs text-gray-400 uppercase tracking-wider">Anúncio (AdSense)</span>
+        <span class="text-xs text-gray-400 uppercase tracking-wider">{{ $t('common.adSense') }}</span>
       </div>
 
       <div 
@@ -58,13 +65,13 @@
       <!-- Área de Compartilhamento e Próximos Passos -->
       <footer class="pt-10 mt-10 border-t border-gray-100 dark:border-gray-800 space-y-8">
         <div class="bg-gray-50 dark:bg-gray-900 rounded-3xl p-8 text-center space-y-4">
-          <h3 class="font-bold text-xl">Edificou sua vida?</h3>
+          <h3 class="font-bold text-xl">{{ $t('studies.footerTitle') }}</h3>
           <p class="text-gray-600 dark:text-gray-400 text-sm max-w-md mx-auto">
-            Aprofunde ainda mais seus conhecimentos com nossos materiais e livros recomendados para estudo.
+            {{ $t('studies.footerDescription') }}
           </p>
           <div class="pt-4">
-            <NuxtLink to="/materiais" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 shadow-lg shadow-primary-500/30">
-              Acessar Materiais <Icon name="lucide:shopping-bag" class="w-4 h-4" />
+            <NuxtLink :to="localePath('/materiais')" class="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-full font-medium transition-transform hover:scale-105 shadow-lg shadow-primary-500/30">
+              {{ $t('studies.footerButton') }} <Icon name="lucide:shopping-bag" class="w-4 h-4" />
             </NuxtLink>
           </div>
         </div>
@@ -78,21 +85,23 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { marked } from 'marked'
 
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 const id = route.params.id
 
-const { data: estudo, pending: isLoading } = await useFetch(`/api/estudos/${id}`, {
+const { data: rawEstudo, pending: isLoading } = await useFetch(`/api/estudos/${id}`, {
   key: `estudo-${id}`
 })
 
-if (estudo.value) {
-  useSeoMeta({
-    title: `${estudo.value.titulo} | Estudo Teológico`,
-    description: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
-    ogTitle: estudo.value.titulo,
-    ogDescription: `Estudo bíblico em ${estudo.value.livro} ${estudo.value.capitulo}`,
-  })
-}
+const estudo = computed(() => useLocalizedDoc(rawEstudo.value, locale.value))
+
+useSeoMeta({
+  title: () => estudo.value ? `${estudo.value.titulo} | ${t('common.theologicalStudy')}` : undefined,
+  description: () => estudo.value ? t('studies.seoDescription', { book: estudo.value.livro, chapter: estudo.value.capitulo }) : undefined,
+  ogTitle: () => estudo.value?.titulo,
+  ogDescription: () => estudo.value ? t('studies.seoDescription', { book: estudo.value.livro, chapter: estudo.value.capitulo }) : undefined,
+})
 
 const htmlContent = computed(() => {
   if (!estudo.value?.conteudo) return ''
@@ -102,7 +111,7 @@ const htmlContent = computed(() => {
 const formattedDate = computed(() => {
   if (!estudo.value?.createdAt) return ''
   const date = new Date(estudo.value.createdAt)
-  return date.toLocaleDateString('pt-BR', { 
+  return date.toLocaleDateString(locale.value, { 
     day: '2-digit', 
     month: 'long', 
     year: 'numeric' 

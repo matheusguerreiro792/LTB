@@ -5,45 +5,41 @@
         class="w-16 h-16 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-2xl mx-auto flex items-center justify-center mb-8">
         <Icon name="lucide:info" class="w-8 h-8" />
       </div>
-      <h1 class="text-4xl font-bold tracking-tight">Sobre o Projeto</h1>
+      <h1 class="text-4xl font-bold tracking-tight">{{ $t('about.heading') }}</h1>
     </header>
 
     <div
       class="prose prose-lg dark:prose-invert prose-primary mx-auto font-sans leading-relaxed text-gray-700 dark:text-gray-300">
       <p class="text-xl text-gray-500 dark:text-gray-400 font-sans text-center">
-        O <strong>Viva a Bíblia</strong> nasceu do desejo de tornar acessível o conhecimento teológico profundo e a
-        sabedoria dos clássicos para o crente moderno.
+        {{ $t('about.introBefore') }}<strong>{{ $t('about.introBrand') }}</strong>{{ $t('about.introAfter') }}
       </p>
 
-      <h2 class="mb-4">Nossa Missão</h2>
+      <h2 class="mb-4">{{ $t('about.missionTitle') }}</h2>
       <p>
-        Acreditamos que a Bíblia é a palavra inerrante de Deus, e que o estudo diligente das escrituras é essencial para
-        o crescimento espiritual. Nosso objetivo é compartilhar devocionais e estudos bíblicos estruturados, baseados em
-        obras clássicas como os comentários de <strong>Matthew Henry</strong> e o <strong>Comentário Bíblico
-          Beacon</strong>.
+        {{ $t('about.missionTextBefore') }}<strong>{{ $t('about.missionMatthew') }}</strong>{{ $t('about.missionAnd') }}<strong>{{ $t('about.missionBeacon') }}</strong>{{ $t('about.missionTextAfter') }}
       </p>
 
-      <h2 class="mb-4">O Conteúdo</h2>
+      <h2 class="mb-4">{{ $t('about.contentTitle') }}</h2>
       <p>
-        Todo o nosso material de leitura é 100% gratuito. Queremos que você tenha acesso livre a:
+        {{ $t('about.contentIntro') }}
       </p>
       <ul>
-        <li><strong>Devocionais Diários:</strong> Reflexões curtas para aplicar no dia a dia.</li>
+        <li><strong>{{ $t('about.contentDevotionalsLabel') }}</strong>{{ $t('about.contentDevotionalsText') }}</li>
         <!-- <li><strong>Estudos Teológicos:</strong> Artigos profundos para quem deseja ir além na teologia.</li> -->
       </ul>
 
-      <h2 class="mb-4">Como o projeto se mantém?</h2>
+      <h2 class="mb-4">{{ $t('about.supportTitle') }}</h2>
       <p>
-        Para manter o site no ar e acessível a todos, utilizamos espaços discretos para anúncios (Google AdSense) e
-        mantemos uma loja com infoprodutos selecionados e links de afiliados para materiais edificantes que
-        recomendamos.
+        {{ $t('about.supportText') }}
       </p>
     </div>
   </div>
 </template>
 
 <script setup>
-useHead({
-  title: 'Sobre',
-})
+const { t } = useI18n()
+
+useHead(() => ({
+  title: t('about.pageTitle'),
+}))
 </script>
