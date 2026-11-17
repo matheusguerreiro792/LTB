@@ -8,7 +8,7 @@
       <div class="container mx-auto px-4 py-16 md:py-24 relative">
         <div class="max-w-3xl mx-auto text-center space-y-8">
           <div
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100/75 dark:bg-primary-950/50 text-primary-700 dark:text-primary-300 text-sm font-medium mb-2">
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-100/75 dark:bg-primary-950/50 text-primary-700 dark:text-primary-300 text-sm font-medium mb-4">
             <Icon name="lucide:book-open" class="w-4 h-4" />
             <span>Devocional do Dia</span>
           </div>
@@ -20,10 +20,10 @@
 
           <template v-else-if="latestDevocional">
             <h1
-              class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
+              class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight">
               {{ latestDevocional.titulo }}
             </h1>
-            <p class="text-lg text-gray-700 dark:text-gray-300 font-sans leading-relaxed italic mx-auto">
+            <p class="text-lg text-gray-700 dark:text-gray-300 font-sans leading-relaxed italic mx-auto font-medium">
               {{ latestDevocional.versiculo }}
             </p>
             <div class="pt-4">
