@@ -35,6 +35,12 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
+  icon: {
+    clientBundle: {
+      scan: true,
+    },
+  },
+
   i18n: {
     baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://vivaabiblia.com.br',
     defaultLocale: 'pt-BR',
