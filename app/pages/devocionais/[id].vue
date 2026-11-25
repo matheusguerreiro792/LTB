@@ -93,7 +93,10 @@ const { data: rawDevocional, pending: isLoading } = await useFetch(`/api/devocio
   key: `devocional-${id}`
 })
 
-const devocional = computed(() => useLocalizedDoc(rawDevocional.value, locale.value))
+const devocional = computed(() => {
+  if (!hasDocTranslation(rawDevocional.value, locale.value)) return null
+  return useLocalizedDoc(rawDevocional.value, locale.value)
+})
 
 useSeoMeta({
   title: () => devocional.value ? `${devocional.value.titulo} | ${t('seo.siteName')}` : undefined,

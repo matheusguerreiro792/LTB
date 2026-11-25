@@ -58,36 +58,45 @@ export default defineNuxtConfig({
       'estudos/[id]': { 'pt-BR': '/estudos/[id]', en: '/studies/[id]' },
       materiais: { 'pt-BR': '/materiais', en: '/materials' },
       sobre: { 'pt-BR': '/sobre', en: '/about' },
-      admin: { 'pt-BR': '/admin', en: false }
+      admin: { 'pt-BR': '/admin', en: '/admin' }
     }
   },
 
-  routeRules: {
-    '/': { isr: 3600 },
-    '/materiais': { isr: 3600 },
-    '/devocionais': { isr: 3600 },
-    '/devocionais/**': { isr: 3600 },
-    '/estudos': { isr: 3600 },
-    '/estudos/**': { isr: 3600 },
-    '/sobre': { prerender: true },
+  routeRules: process.env.NODE_ENV === 'production'
+    ? {
+        '/': { isr: 3600 },
+        '/materiais': { isr: 3600 },
+        '/devocionais': { isr: 3600 },
+        '/devocionais/**': { isr: 3600 },
+        '/estudos': { isr: 3600 },
+        '/estudos/**': { isr: 3600 },
+        '/sobre': { prerender: true },
 
-    '/en': { isr: 3600 },
-    '/en/materials': { isr: 3600 },
-    '/en/devotionals': { isr: 3600 },
-    '/en/devotionals/**': { isr: 3600 },
-    '/en/studies': { isr: 3600 },
-    '/en/studies/**': { isr: 3600 },
-    '/en/about': { prerender: true },
+        '/en': { isr: 3600 },
+        '/en/materials': { isr: 3600 },
+        '/en/devotionals': { isr: 3600 },
+        '/en/devotionals/**': { isr: 3600 },
+        '/en/studies': { isr: 3600 },
+        '/en/studies/**': { isr: 3600 },
+        '/en/about': { prerender: true },
 
-    '/api/**': {
-      swr: 3600,
-      headers: {
-        'cache-control': 's-maxage=3600, stale-while-revalidate'
+        '/api/**': {
+          swr: 3600,
+          headers: {
+            'cache-control': 's-maxage=3600, stale-while-revalidate'
+          }
+        },
+
+        '/admin': { ssr: false },
+        '/admin/**': { ssr: false },
+        '/en/admin': { ssr: false },
+        '/en/admin/**': { ssr: false }
       }
-    },
-
-    '/admin': { ssr: false },
-    '/admin/**': { ssr: false }
-  }
+    : {
+        '/admin': { ssr: false },
+        '/admin/**': { ssr: false },
+        '/en/admin': { ssr: false },
+        '/en/admin/**': { ssr: false }
+      }
 })
 

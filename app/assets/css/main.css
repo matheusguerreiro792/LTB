@@ -49,3 +49,8 @@
     min-height: 90px;
   }
 }
+
+.prose blockquote p::before,
+.prose blockquote p::after {
+  content: none;
+}

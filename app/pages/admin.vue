@@ -117,7 +117,7 @@
                 </div>
                 <div class="text-sm text-gray-500 flex items-center gap-2 mt-1">
                   <span class="font-semibold text-emerald-600">R$ {{ Number(mat.preco || 0).toFixed(2).replace('.', ',')
-                    }}</span> &bull;
+                  }}</span> &bull;
                   <span v-if="mat.urlCheckout" class="truncate max-w-xs text-xs text-gray-400">Link configurado</span>
                   <span v-else class="text-xs text-amber-500">Sem link de checkout</span>
                 </div>
@@ -252,7 +252,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-1">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 - "No
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo (Ex: Salmos 56:3 -
+                  "No
                   dia em que eu...")</label>
                 <input v-model="devocionalForm.versiculo" type="text" required
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
@@ -268,7 +269,8 @@
 
             <div class="space-y-1">
               <div class="flex items-center justify-between">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional (Markdown
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Devocional
+                  (Markdown
                   suportado)</label>
                 <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank"
                   class="text-xs text-primary-600 hover:underline flex items-center gap-1">
@@ -284,7 +286,8 @@
 
           <template v-else>
             <p class="text-xs text-gray-500 dark:text-gray-400">
-              Campos opcionais em inglês americano (en-US). Se preenchidos, o devocional aparecerá automaticamente na versão em inglês.
+              Campos opcionais em inglês americano (en-US). Se preenchidos, o devocional aparecerá automaticamente na
+              versão em inglês.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-1">
@@ -294,7 +297,8 @@
               </div>
 
               <div class="space-y-1">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bible Book (Ex: Psalms)</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Bible Book (Ex:
+                  Psalms)</label>
                 <input v-model="devocionalForm.en.livro" type="text"
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
@@ -315,7 +319,8 @@
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Devotional Content (Markdown - EN-US)</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Devotional Content (Markdown -
+                EN-US)</label>
               <textarea v-model="devocionalForm.en.conteudo" rows="12"
                 placeholder="## Main title&#10;&#10;Write the English version here..."
                 class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
@@ -337,7 +342,7 @@
               class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
               <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
               <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Devocional')
-                }}</span>
+              }}</span>
             </button>
           </div>
         </form>
@@ -451,7 +456,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-1 gap-6">
               <div class="space-y-1">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional - EN-US)</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional -
+                  EN-US)</label>
                 <input v-model="estudoForm.en.imagemCapa" type="url" placeholder="https://..."
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
@@ -478,7 +484,8 @@
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Study Content (Markdown - EN-US)</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Study Content (Markdown -
+                EN-US)</label>
               <textarea v-model="estudoForm.en.conteudo" rows="15"
                 placeholder="## Introduction&#10;&#10;Write the English study here..."
                 class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
@@ -536,7 +543,7 @@
               <div class="space-y-1">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título do Produto /
                   Material</label>
-                <input v-model="materialForm.titulo" type="text" required placeholder="Ex: Guia de Estudo Beacon"
+                <input v-model="materialForm.titulo" type="text" required placeholder="Ex: Guia de Estudo"
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
 
@@ -551,14 +558,16 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-1">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Preço (R$)</label>
-                <input v-model.number="materialForm.preco" type="number" step="0.01" min="0" required placeholder="29.90"
+                <input v-model.number="materialForm.preco" type="number" step="0.01" min="0" required
+                  placeholder="29.90"
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
 
               <div class="space-y-1">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Link de Checkout / Compra
                   (Kiwify, Hotmart, Amazon, etc.)</label>
-                <input v-model="materialForm.urlCheckout" type="url" required placeholder="https://pay.kiwify.com.br/..."
+                <input v-model="materialForm.urlCheckout" type="url" required
+                  placeholder="https://pay.kiwify.com.br/..."
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
             </div>
@@ -586,8 +595,9 @@
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-1">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product / Material Title (EN-US)</label>
-                <input v-model="materialForm.en.titulo" type="text" placeholder="Ex: Beacon Study Guide"
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Product / Material Title
+                  (EN-US)</label>
+                <input v-model="materialForm.en.titulo" type="text" placeholder="Ex: Study Guide"
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
 
@@ -606,22 +616,23 @@
               </div>
 
               <div class="space-y-1">
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Checkout / Purchase Link (EN-US)</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Checkout / Purchase Link
+                  (EN-US)</label>
                 <input v-model="materialForm.en.urlCheckout" type="url" placeholder="https://..."
                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
               </div>
             </div>
 
             <div class="space-y-1">
-              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional - EN-US)</label>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cover Image URL (Optional -
+                EN-US)</label>
               <input v-model="materialForm.en.urlImagem" type="url" placeholder="https://..."
                 class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
             </div>
 
             <div class="space-y-1">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description (EN-US)</label>
-              <textarea v-model="materialForm.en.descricao" rows="4"
-                placeholder="Write the English description here..."
+              <textarea v-model="materialForm.en.descricao" rows="4" placeholder="Write the English description here..."
                 class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y text-sm"></textarea>
             </div>
           </template>

@@ -2,7 +2,7 @@
   "seo": {
     "siteName": "Viva a Bíblia",
     "defaultTitle": "Viva a Bíblia | Devotionals & Studies",
-    "defaultDescription": "Free daily devotionals and theological studies based on Matthew Henry and Beacon Bible commentaries."
+    "defaultDescription": "Free daily devotionals and theological studies based on Matthew Henry Bible commentaries."
   },
   "nav": {
     "devotionals": "Devotionals",
@@ -15,7 +15,7 @@
     "switchLanguage": "Switch language"
   },
   "footer": {
-    "description": "Sharing in-depth biblical knowledge and devotionals based on the commentaries of Matthew Henry and Beacon. For the edification of the Church.",
+    "description": "Sharing in-depth biblical knowledge and devotionals based on the commentaries of Matthew Henry. For the edification of the Church.",
     "quickLinks": "Quick Links",
     "dailyDevotionals": "Daily Devotionals",
     "support": "Support",
@@ -65,7 +65,7 @@
   "studies": {
     "pageTitle": "Theological Studies",
     "heading": "Theological Studies",
-    "subtitle": "In-depth articles based on the Beacon Bible Commentary for your edification and spiritual growth.",
+    "subtitle": "In-depth articles based on the Bible Commentary for your edification and spiritual growth.",
     "empty": "No studies found.",
     "notFoundTitle": "Study not found",
     "notFoundDescription": "This content may have been removed or the link is incorrect.",
@@ -93,7 +93,6 @@
     "missionTextBefore": "We believe the Bible is the inerrant Word of God, and that diligent study of Scripture is essential for spiritual growth. Our goal is to share structured devotionals and Bible studies based on classic works such as the commentaries of ",
     "missionMatthew": "Matthew Henry",
     "missionAnd": " and the ",
-    "missionBeacon": "Beacon Bible Commentary",
     "missionTextAfter": ".",
     "contentTitle": "The Content",
     "contentIntro": "All of our reading material is 100% free. We want you to have open access to:",

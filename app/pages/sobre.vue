@@ -16,7 +16,8 @@
 
       <h2 class="mb-4">{{ $t('about.missionTitle') }}</h2>
       <p>
-        {{ $t('about.missionTextBefore') }}<strong>{{ $t('about.missionMatthew') }}</strong>{{ $t('about.missionAnd') }}<strong>{{ $t('about.missionBeacon') }}</strong>{{ $t('about.missionTextAfter') }}
+        {{ $t('about.missionTextBefore') }}<strong>{{ $t('about.missionMatthew') }}</strong>{{
+          $t('about.missionTextAfter') }}
       </p>
 
       <h2 class="mb-4">{{ $t('about.contentTitle') }}</h2>

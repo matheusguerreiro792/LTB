@@ -7,8 +7,9 @@ export default defineCachedEventHandler(
     return await fetchFirestoreDoc('estudos', id)
   },
   {
-    maxAge: 60 * 60, // 1 hora de cache
-    swr: true,
+    maxAge: import.meta.dev ? 0 : 60 * 60, // 1 hora de cache em produção
+    swr: !import.meta.dev,
+    shouldBypassCache: () => import.meta.dev,
     name: 'api-estudo-id',
     getKey: (event) => `estudo-${getRouterParam(event, 'id')}`
   }

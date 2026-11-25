@@ -11,8 +11,9 @@ export default defineCachedEventHandler(
     })
   },
   {
-    maxAge: 60 * 60, // 1 hora de cache
-    swr: true,       // Stale-While-Revalidate
+    maxAge: import.meta.dev ? 0 : 60 * 60, // 1 hora de cache em produção
+    swr: !import.meta.dev,       // Stale-While-Revalidate em produção
+    shouldBypassCache: () => import.meta.dev,
     name: 'api-materiais'
   }
 )

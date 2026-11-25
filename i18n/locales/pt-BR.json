@@ -2,7 +2,7 @@
   "seo": {
     "siteName": "Viva a Bíblia",
     "defaultTitle": "Viva a Bíblia | Devocionais & Estudos",
-    "defaultDescription": "Devocionais diários e estudos teológicos gratuitos baseados em comentários de Matthew Henry e Beacon."
+    "defaultDescription": "Devocionais diários e estudos teológicos gratuitos baseados em comentários de Matthew Henry."
   },
   "nav": {
     "devotionals": "Devocionais",
@@ -15,7 +15,7 @@
     "switchLanguage": "Mudar idioma"
   },
   "footer": {
-    "description": "Compartilhando conhecimento bíblico e devocionais com profundidade, baseado nos comentários de Matthew Henry e Beacon. Para a edificação da Igreja.",
+    "description": "Compartilhando conhecimento bíblico e devocionais com profundidade, baseado nos comentários de Matthew Henry. Para a edificação da Igreja.",
     "quickLinks": "Link Rápido",
     "dailyDevotionals": "Devocionais Diários",
     "support": "Apoie",
@@ -65,7 +65,7 @@
   "studies": {
     "pageTitle": "Estudos Teológicos",
     "heading": "Estudos Teológicos",
-    "subtitle": "Artigos profundos baseados nos comentários Bíblicos Beacon para sua edificação e crescimento espiritual.",
+    "subtitle": "Artigos profundos baseados nos comentários Bíblicos para sua edificação e crescimento espiritual.",
     "empty": "Nenhum estudo encontrado.",
     "notFoundTitle": "Estudo não encontrado",
     "notFoundDescription": "Este conteúdo pode ter sido removido ou o link está incorreto.",
@@ -93,7 +93,6 @@
     "missionTextBefore": "Acreditamos que a Bíblia é a palavra inerrante de Deus, e que o estudo diligente das escrituras é essencial para o crescimento espiritual. Nosso objetivo é compartilhar devocionais e estudos bíblicos estruturados, baseados em obras clássicas como os comentários de ",
     "missionMatthew": "Matthew Henry",
     "missionAnd": " e o ",
-    "missionBeacon": "Comentário Bíblico Beacon",
     "missionTextAfter": ".",
     "contentTitle": "O Conteúdo",
     "contentIntro": "Todo o nosso material de leitura é 100% gratuito. Queremos que você tenha acesso livre a:",

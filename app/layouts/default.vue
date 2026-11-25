@@ -28,13 +28,13 @@
           <!-- Language Switcher -->
           <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-0.5 text-xs font-semibold" :aria-label="$t('nav.switchLanguage')">
             <NuxtLink
-              :to="switchLocalePath('pt-BR')"
+              :to="switchLocalePath('pt-BR') || localePath('/', 'pt-BR')"
               :class="locale === 'pt-BR' ? 'bg-white dark:bg-gray-950 text-primary-600 dark:text-primary-400 shadow-xs' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
               class="px-2.5 py-1 rounded-full transition-colors">
               PT
             </NuxtLink>
             <NuxtLink
-              :to="switchLocalePath('en')"
+              :to="switchLocalePath('en') || localePath('/', 'en')"
               :class="locale === 'en' ? 'bg-white dark:bg-gray-950 text-primary-600 dark:text-primary-400 shadow-xs' : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'"
               class="px-2.5 py-1 rounded-full transition-colors">
               EN
@@ -48,7 +48,7 @@
             <Icon v-else name="lucide:moon" class="w-5 h-5 text-gray-500 hover:text-primary-600" />
           </button>
 
-          <NuxtLink to="/admin"
+          <NuxtLink :to="localePath('/admin')"
             class="hidden md:flex items-center gap-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-full font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-all hover:shadow-lg hover:shadow-primary-500/20 text-sm">
             <span>{{ $t('nav.admin') }}</span>
             <Icon name="lucide:arrow-right" class="w-4 h-4" />
@@ -74,7 +74,7 @@
         <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/sobre')" class="block font-medium hover:text-primary-600">{{ $t('nav.about') }}
         </NuxtLink>
         <div class="pt-4 border-t border-gray-100 dark:border-gray-800">
-          <NuxtLink @click="isMobileMenuOpen = false" to="/admin" class="flex items-center justify-between font-medium">
+          <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/admin')" class="flex items-center justify-between font-medium">
             {{ $t('nav.adminPanel') }}
             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </NuxtLink>

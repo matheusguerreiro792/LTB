@@ -40,18 +40,30 @@ export async function fetchFirestoreCollection(collectionName: string) {
     throw new Error('Firebase Project ID não configurado.')
   }
 
-  const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${collectionName}?pageSize=100`
+  const docs: any[] = []
+  let pageToken: string | undefined
 
-  const response = await fetch(url)
-  if (!response.ok) {
-    console.error(`Erro ao consultar ${collectionName} no Firestore:`, response.statusText)
-    return []
-  }
+  do {
+    const url = new URL(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${collectionName}`)
+    url.searchParams.set('pageSize', '100')
+    if (pageToken) {
+      url.searchParams.set('pageToken', pageToken)
+    }
 
-  const data = await response.json()
-  if (!data.documents) return []
+    const response = await fetch(url.toString())
+    if (!response.ok) {
+      console.error(`Erro ao consultar ${collectionName} no Firestore:`, response.statusText)
+      break
+    }
 
-  return data.documents.map(parseFirestoreDoc).filter(Boolean)
+    const data = await response.json()
+    if (data.documents) {
+      docs.push(...data.documents.map(parseFirestoreDoc).filter(Boolean))
+    }
+    pageToken = data.nextPageToken
+  } while (pageToken)
+
+  return docs
 }
 
 export async function fetchFirestoreDoc(collectionName: string, id: string) {

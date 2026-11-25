@@ -9,7 +9,9 @@ function resolveTranslationKey(locale: string): string {
 export function hasDocTranslation(doc: Record<string, any> | null | undefined, locale: string): boolean {
   if (!doc) return false
   const key = resolveTranslationKey(locale)
-  if (key === 'pt-BR') return true
+  if (key === 'pt-BR') {
+    return Boolean(doc.titulo?.trim() || doc.conteudo?.trim() || doc.descricao?.trim())
+  }
   const tr = doc.translations?.[key]
   return Boolean(tr && (tr.titulo?.trim() || tr.conteudo?.trim() || tr.descricao?.trim()))
 }
