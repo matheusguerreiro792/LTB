@@ -17,7 +17,7 @@
           <NuxtLink :to="localePath('/devocionais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             {{ $t('nav.devotionals') }}</NuxtLink>
           <!-- <NuxtLink :to="localePath('/estudos')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ $t('nav.studies') }}</NuxtLink> -->
-          <NuxtLink :to="localePath('/materiais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+          <NuxtLink v-if="hasMaterials" :to="localePath('/materiais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             {{ $t('nav.materials') }}</NuxtLink>
           <NuxtLink :to="localePath('/sobre')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ $t('nav.about') }}
           </NuxtLink>
@@ -69,7 +69,7 @@
           {{ $t('nav.devotionals') }}</NuxtLink>
         <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/estudos')" class="block font-medium hover:text-primary-600">
           {{ $t('nav.studies') }}</NuxtLink>
-        <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/materiais')" class="block font-medium hover:text-primary-600">
+        <NuxtLink v-if="hasMaterials" @click="isMobileMenuOpen = false" :to="localePath('/materiais')" class="block font-medium hover:text-primary-600">
           {{ $t('nav.materials') }}</NuxtLink>
         <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/sobre')" class="block font-medium hover:text-primary-600">{{ $t('nav.about') }}
         </NuxtLink>
@@ -115,10 +115,12 @@
           <div>
             <h3 class="font-semibold text-gray-900 dark:text-white mb-4">{{ $t('footer.support') }}</h3>
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
-              <li>
+              <li v-if="hasMaterials">
                 <NuxtLink :to="localePath('/materiais')" class="hover:text-primary-600 transition-colors">{{ $t('footer.buyMaterials') }}</NuxtLink>
               </li>
-              <li><a href="#" class="hover:text-primary-600 transition-colors">{{ $t('footer.donations') }}</a></li>
+              <li v-if="hasDonations">
+                <NuxtLink :to="localePath('/doacoes')" class="hover:text-primary-600 transition-colors">{{ $t('footer.donations') }}</NuxtLink>
+              </li>
               <li>
                 <NuxtLink :to="localePath('/sobre')" class="hover:text-primary-600 transition-colors">{{ $t('footer.aboutProject') }}</NuxtLink>
               </li>
@@ -145,11 +147,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 const { locale } = useI18n()
 const localePath = useLocalePath()
 const switchLocalePath = useSwitchLocalePath()
+const config = useRuntimeConfig()
+
+const hasDonations = computed(() => Boolean(config.public.pix?.key?.trim()))
+
+const { data: materiaisData } = await useFetch('/api/materiais', {
+  key: 'materiais-list',
+  default: () => []
+})
+
+const hasMaterials = computed(() => {
+  return (materiaisData.value || []).some(
+    item => item.ativo !== false && hasDocTranslation(item, locale.value)
+  )
+})
 
 const isMobileMenuOpen = ref(false)
 const isDark = ref(false)

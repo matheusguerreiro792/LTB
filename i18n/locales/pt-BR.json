@@ -100,5 +100,23 @@
     "contentDevotionalsText": " Reflexões curtas para aplicar no dia a dia.",
     "supportTitle": "Como o projeto se mantém?",
     "supportText": "Para manter o site no ar e acessível a todos, utilizamos espaços discretos para anúncios (Google AdSense) e mantemos uma loja com infoprodutos selecionados e links de afiliados para materiais edificantes que recomendamos."
+  },
+  "donations": {
+    "pageTitle": "Doações",
+    "badge": "Apoie o Projeto",
+    "heading": "Contribua com o Viva a Bíblia",
+    "subtitle": "Todo o conteúdo bíblico deste site é e continuará sendo 100% gratuito. Sua doação voluntária ajuda a manter o servidor no ar e a produzir novos devocionais.",
+    "chooseAmount": "Escolha um valor (mínimo R$ 1,00)",
+    "customAmountLabel": "Ou digite outro valor (R$)",
+    "minAmountError": "O valor mínimo para doação via Pix é R$ 1,00.",
+    "qrInstruction": "Aponte a câmera do app do seu banco para o QR Code abaixo:",
+    "pixCopyLabel": "Pix Copia e Cola",
+    "copyButton": "Copiar código Pix",
+    "copiedButton": "Copiado!",
+    "notConfigured": "A chave Pix ainda não foi configurada no ambiente.",
+    "internationalTitle": "Doação internacional",
+    "internationalDescription": "Está fora do Brasil? Você também pode apoiar o projeto pelo link abaixo:",
+    "internationalButton": "Apoiar internacionalmente",
+    "transparencyNote": "As doações são totalmente voluntárias e sem contrapartida. Obrigado por orar e caminhar conosco!"
   }
 }

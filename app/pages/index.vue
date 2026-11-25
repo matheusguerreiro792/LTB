@@ -98,7 +98,7 @@
       </section>
 
       <!-- CTA Loja / Infoprodutos -->
-      <section class="bg-primary-700 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden dark:bg-gray-900">
+      <section v-if="hasMaterials" class="bg-primary-700 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden dark:bg-gray-900">
         <div class="absolute top-0 right-0 w-64 h-64 bg-primary-600 rounded-full blur-3xl opacity-20 -mr-32 -mt-32">
         </div>
         <div class="relative z-10 md:w-2/3 space-y-6">
@@ -138,6 +138,17 @@ const { data: devocionaisData, pending: isLoadingDevocional } = await useFetch('
 const { data: estudosData } = await useFetch('/api/estudos', {
   key: 'home-estudos',
   default: () => []
+})
+
+const { data: materiaisData } = await useFetch('/api/materiais', {
+  key: 'materiais-list',
+  default: () => []
+})
+
+const hasMaterials = computed(() => {
+  return (materiaisData.value || []).some(
+    item => item.ativo !== false && hasDocTranslation(item, locale.value)
+  )
 })
 
 const latestDevocional = computed(() => {

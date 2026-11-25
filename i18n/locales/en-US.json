@@ -100,5 +100,23 @@
     "contentDevotionalsText": " Short reflections to apply in everyday life.",
     "supportTitle": "How is the project sustained?",
     "supportText": "To keep the site online and accessible to everyone, we use discreet ad placements (Google AdSense) and maintain a curated store with selected digital resources and affiliate links for edifying materials we recommend."
+  },
+  "donations": {
+    "pageTitle": "Donations",
+    "badge": "Support the Project",
+    "heading": "Support Viva a Bíblia",
+    "subtitle": "All biblical content on this site is and will remain 100% free. Your voluntary donation helps keep the servers running and supports new devotionals.",
+    "chooseAmount": "Choose an amount (minimum R$ 1.00)",
+    "customAmountLabel": "Or enter another amount (BRL)",
+    "minAmountError": "The minimum Pix donation amount is R$ 1.00.",
+    "qrInstruction": "Scan the QR Code below with your Brazilian bank app:",
+    "pixCopyLabel": "Pix Copy & Paste",
+    "copyButton": "Copy Pix code",
+    "copiedButton": "Copied!",
+    "notConfigured": "Donations are not configured yet.",
+    "internationalTitle": "International support",
+    "internationalDescription": "Support the project from outside Brazil using the link below:",
+    "internationalButton": "Support internationally",
+    "transparencyNote": "Donations are completely voluntary. Thank you for praying and walking with us!"
   }
 }

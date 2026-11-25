@@ -144,30 +144,89 @@
             <Icon name="lucide:list" class="w-5 h-5 text-primary-600" />
             Devocionais Publicados
           </h2>
-          <div
-            class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
-            <div v-if="devocionaisList.length === 0" class="p-6 text-center text-gray-500">Nenhum devocional encontrado.
-            </div>
-            <div v-for="dev in devocionaisList" :key="dev.id"
-              class="flex flex-col sm:flex-row items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-              <div class="flex-1 mb-2 sm:mb-0">
-                <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ dev.titulo }}</h4>
-                <div class="text-sm text-gray-500 flex items-center gap-2">
-                  <span class="text-primary-600 font-medium">{{ dev.livro }}</span> &bull;
-                  <span>{{ formatDate(dev.createdAt) }}</span>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Coluna PT -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                  Português (PT)
+                </h3>
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+                  {{ devocionaisPt.length }}
+                </span>
+              </div>
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+                <div v-if="devocionaisPt.length === 0" class="p-6 text-center text-gray-500">
+                  Nenhum devocional em português encontrado.
+                </div>
+                <div v-for="dev in devocionaisPt" :key="`pt-${dev.id}`"
+                  class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors gap-2">
+                  <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ dev.titulo }}</h4>
+                    <div class="text-sm text-gray-500 flex flex-wrap items-center gap-2 mt-0.5">
+                      <span class="text-primary-600 font-medium">{{ dev.livro }}</span>
+                      <span v-if="dev.tema">&bull; #{{ dev.tema }}</span>
+                      <span>&bull; {{ formatDate(dev.createdAt) }}</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button @click="editItem(dev, 'devocional', 'pt-BR')"
+                      class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                      title="Editar em PT">
+                      <Icon name="lucide:edit-2" class="w-4 h-4" />
+                    </button>
+                    <button @click="deleteItem(dev.id, 'devocionais')"
+                      class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      title="Excluir">
+                      <Icon name="lucide:trash-2" class="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="flex items-center gap-2">
-                <button @click="editItem(dev, 'devocional')"
-                  class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
-                  title="Editar">
-                  <Icon name="lucide:edit-2" class="w-4 h-4" />
-                </button>
-                <button @click="deleteItem(dev.id, 'devocionais')"
-                  class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                  title="Excluir">
-                  <Icon name="lucide:trash-2" class="w-4 h-4" />
-                </button>
+            </div>
+
+            <!-- Coluna EN -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                  English (EN)
+                </h3>
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                  {{ devocionaisEn.length }}
+                </span>
+              </div>
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+                <div v-if="devocionaisEn.length === 0" class="p-6 text-center text-gray-500">
+                  Nenhum devocional em inglês encontrado.
+                </div>
+                <div v-for="item in devocionaisEn" :key="`en-${item.raw.id}`"
+                  class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors gap-2">
+                  <div class="flex-1 min-w-0 space-y-1">
+                    <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ item.en.titulo }}</h4>
+                    <div class="text-sm text-gray-500 flex flex-wrap items-center gap-2">
+                      <span v-if="item.en.livro" class="text-primary-600 font-medium">{{ item.en.livro }}</span>
+                      <span v-if="item.en.tema">&bull; #{{ item.en.tema }}</span>
+                      <span>&bull; {{ formatDate(item.raw.createdAt) }}</span>
+                    </div>
+                    <p v-if="item.en.versiculo" class="text-xs text-gray-500 dark:text-gray-400 italic line-clamp-1">
+                      {{ item.en.versiculo }}
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button @click="editItem(item.raw, 'devocional', 'en-US')"
+                      class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                      title="Editar em EN">
+                      <Icon name="lucide:edit-2" class="w-4 h-4" />
+                    </button>
+                    <button @click="deleteItem(item.raw.id, 'devocionais')"
+                      class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      title="Excluir">
+                      <Icon name="lucide:trash-2" class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -688,7 +747,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, computed, onMounted, reactive } from 'vue'
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
 import { collection, addDoc, updateDoc, doc, deleteDoc, getDocs, query, orderBy, serverTimestamp } from 'firebase/firestore'
 
@@ -733,6 +792,19 @@ const devocionaisList = ref([])
 const estudosList = ref([])
 const materiaisList = ref([])
 const editingId = ref(null)
+
+const devocionaisPt = computed(() => {
+  return devocionaisList.value.filter(dev => hasDocTranslation(dev, 'pt-BR'))
+})
+
+const devocionaisEn = computed(() => {
+  return devocionaisList.value
+    .filter(dev => hasDocTranslation(dev, 'en'))
+    .map(dev => ({
+      raw: dev,
+      en: useLocalizedDoc(dev, 'en')
+    }))
+})
 
 const estudoForm = reactive({
   titulo: '',
@@ -1066,9 +1138,9 @@ const openForm = (viewName) => {
   currentView.value = viewName
 }
 
-const editItem = (item, type) => {
+const editItem = (item, type, initialLang = 'pt-BR') => {
   editingId.value = item.id
-  formLang.value = 'pt-BR'
+  formLang.value = initialLang
   const en = item.translations?.['en-US'] || {}
   if (type === 'devocional') {
     devocionalForm.titulo = item.titulo || ''

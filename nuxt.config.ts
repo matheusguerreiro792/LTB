@@ -10,7 +10,13 @@ export default defineNuxtConfig({
         storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
         messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
         appId: process.env.FIREBASE_APP_ID,
-      }
+      },
+      pix: {
+        key: process.env.PIX_KEY || '',
+        merchantName: process.env.PIX_MERCHANT_NAME || 'Viva a Biblia',
+        merchantCity: process.env.PIX_MERCHANT_CITY || 'SAO PAULO',
+      },
+      donationExternalUrl: process.env.DONATION_EXTERNAL_URL || ''
     }
   },
 
@@ -58,6 +64,7 @@ export default defineNuxtConfig({
       'estudos/[id]': { 'pt-BR': '/estudos/[id]', en: '/studies/[id]' },
       materiais: { 'pt-BR': '/materiais', en: '/materials' },
       sobre: { 'pt-BR': '/sobre', en: '/about' },
+      doacoes: { 'pt-BR': '/doacoes', en: '/donations' },
       admin: { 'pt-BR': '/admin', en: '/admin' }
     }
   },
@@ -71,6 +78,7 @@ export default defineNuxtConfig({
         '/estudos': { isr: 3600 },
         '/estudos/**': { isr: 3600 },
         '/sobre': { prerender: true },
+        '/doacoes': { prerender: true },
 
         '/en': { isr: 3600 },
         '/en/materials': { isr: 3600 },
@@ -79,6 +87,7 @@ export default defineNuxtConfig({
         '/en/studies': { isr: 3600 },
         '/en/studies/**': { isr: 3600 },
         '/en/about': { prerender: true },
+        '/en/donations': { prerender: true },
 
         '/api/**': {
           swr: 3600,
