@@ -1,2 +1,5 @@
 User-Agent: *
-Disallow:
+Disallow: /admin
+Disallow: /en/admin
+
+Sitemap: https://vivaabiblia.com.br/sitemap.xml
