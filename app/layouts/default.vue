@@ -124,6 +124,9 @@
               <li>
                 <NuxtLink :to="localePath('/sobre')" class="hover:text-primary-600 transition-colors">{{ $t('footer.aboutProject') }}</NuxtLink>
               </li>
+              <li>
+                <NuxtLink :to="localePath('/politica-de-privacidade')" class="hover:text-primary-600 transition-colors">{{ $t('footer.privacyPolicy') }}</NuxtLink>
+              </li>
             </ul>
           </div>
         </div>

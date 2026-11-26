@@ -22,6 +22,7 @@
     "buyMaterials": "Browse Materials",
     "donations": "Donations",
     "aboutProject": "About the Project",
+    "privacyPolicy": "Privacy Policy",
     "rights": "© {year} Viva a Bíblia. All rights reserved."
   },
   "common": {
@@ -118,5 +119,24 @@
     "internationalDescription": "Support the project from outside Brazil using the link below:",
     "internationalButton": "Support internationally",
     "transparencyNote": "Donations are completely voluntary. Thank you for praying and walking with us!"
+  },
+  "privacy": {
+    "pageTitle": "Privacy Policy",
+    "heading": "Privacy Policy",
+    "lastUpdated": "Last updated: November 2026",
+    "intro": "Your privacy is important to us. It is Viva a Bíblia's (vivaabiblia.com.br) policy to respect your privacy regarding any information we may collect while you browse our website.",
+    "dataCollectionTitle": "1. Information Collection and Browsing",
+    "dataCollectionText": "Access to devotionals and Bible studies on Viva a Bíblia is completely free and does not require registration or personal data submission from readers. We only use your browser's local storage (localStorage) to remember interface preferences such as light or dark theme.",
+    "adsenseTitle": "2. Google AdSense and Advertising Cookies",
+    "adsenseText1": "We use Google AdSense to serve ads that help keep this project free and online. Google, as a third-party vendor, uses cookies to serve ads on our site based on your prior visits to this website or other websites on the Internet.",
+    "adsenseText2": "The use of advertising cookies enables Google and its partners to serve more relevant ads to you. You may opt out of personalized advertising at any time by visiting Google Ad Settings (adssettings.google.com) or via aboutads.info/choices.",
+    "cookiesTitle": "3. Cookie Management",
+    "cookiesText": "You can configure your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable cookies, some third-party ad features may behave differently, while all biblical reading content remains fully accessible.",
+    "infraTitle": "4. Infrastructure and External Links",
+    "infraText": "Our website uses content delivery and network protection services (Cloudflare) and cloud database services (Google Firebase) over HTTPS to ensure security and availability. Any links to external materials or third-party websites are governed by their own privacy policies.",
+    "lgpdTitle": "5. Your Privacy Rights",
+    "lgpdText": "In accordance with applicable data protection laws (including Brazil's LGPD - Law No. 13.709/2018), you have the right to transparency regarding data processing and may revoke advertising cookie consent at any time via your browser settings or the opt-out links above.",
+    "changesTitle": "6. Changes to This Policy",
+    "changesText": "We may update this Privacy Policy periodically to reflect site improvements, legal requirements, or partner policies such as Google AdSense. We encourage you to review this page occasionally to stay informed."
   }
 }

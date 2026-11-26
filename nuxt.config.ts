@@ -65,6 +65,7 @@ export default defineNuxtConfig({
       materiais: { 'pt-BR': '/materiais', en: '/materials' },
       sobre: { 'pt-BR': '/sobre', en: '/about' },
       doacoes: { 'pt-BR': '/doacoes', en: '/donations' },
+      'politica-de-privacidade': { 'pt-BR': '/politica-de-privacidade', en: '/privacy-policy' },
       admin: { 'pt-BR': '/admin', en: '/admin' }
     }
   },
@@ -79,6 +80,7 @@ export default defineNuxtConfig({
         '/estudos/**': { isr: 3600 },
         '/sobre': { prerender: true },
         '/doacoes': { prerender: true },
+        '/politica-de-privacidade': { prerender: true },
 
         '/en': { isr: 3600 },
         '/en/materials': { isr: 3600 },
@@ -88,6 +90,7 @@ export default defineNuxtConfig({
         '/en/studies/**': { isr: 3600 },
         '/en/about': { prerender: true },
         '/en/donations': { prerender: true },
+        '/en/privacy-policy': { prerender: true },
 
         '/api/**': {
           swr: 3600,

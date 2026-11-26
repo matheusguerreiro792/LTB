@@ -49,6 +49,8 @@ export default defineCachedEventHandler(
       { loc: `${baseUrl}/en/devotionals`, changefreq: 'daily', priority: '0.9' },
       { loc: `${baseUrl}/sobre`, changefreq: 'monthly', priority: '0.6' },
       { loc: `${baseUrl}/en/about`, changefreq: 'monthly', priority: '0.6' },
+      { loc: `${baseUrl}/politica-de-privacidade`, changefreq: 'yearly', priority: '0.4' },
+      { loc: `${baseUrl}/en/privacy-policy`, changefreq: 'yearly', priority: '0.4' },
     ]
 
     if (process.env.PIX_KEY?.trim()) {

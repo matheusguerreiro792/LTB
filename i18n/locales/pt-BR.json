@@ -22,6 +22,7 @@
     "buyMaterials": "Adquirir Materiais",
     "donations": "Doações",
     "aboutProject": "Sobre o Projeto",
+    "privacyPolicy": "Política de Privacidade",
     "rights": "© {year} Viva a Bíblia. Todos os direitos reservados."
   },
   "common": {
@@ -118,5 +119,24 @@
     "internationalDescription": "Está fora do Brasil? Você também pode apoiar o projeto pelo link abaixo:",
     "internationalButton": "Apoiar internacionalmente",
     "transparencyNote": "As doações são totalmente voluntárias e sem contrapartida. Obrigado por orar e caminhar conosco!"
+  },
+  "privacy": {
+    "pageTitle": "Política de Privacidade",
+    "heading": "Política de Privacidade",
+    "lastUpdated": "Última atualização: novembro de 2026",
+    "intro": "A sua privacidade é importante para nós. É política do Viva a Bíblia (vivaabiblia.com.br) respeitar a sua privacidade em relação a qualquer informação que possamos coletar durante a sua navegação em nosso site.",
+    "dataCollectionTitle": "1. Coleta de Informações e Navegação",
+    "dataCollectionText": "O acesso aos devocionais e estudos bíblicos do Viva a Bíblia é totalmente gratuito e não exige cadastro ou envio de dados pessoais por parte dos leitores. Utilizamos apenas o armazenamento local do seu navegador (localStorage) para salvar preferências de exibição, como o tema claro ou escuro.",
+    "adsenseTitle": "2. Google AdSense e Cookies de Publicidade",
+    "adsenseText1": "Utilizamos o Google AdSense para veicular anúncios que ajudam a manter o projeto gratuito e no ar. O Google, como fornecedor terceiro, utiliza cookies para exibir anúncios em nosso site com base nas suas visitas anteriores a este ou a outros sites na Internet.",
+    "adsenseText2": "O uso de cookies de publicidade permite que o Google e seus parceiros veiculem anúncios mais relevantes para você. Você pode desativar a publicidade personalizada a qualquer momento acessando as Configurações de Anúncios do Google (adssettings.google.com) ou por meio do portal aboutads.info/choices.",
+    "cookiesTitle": "3. Gerenciamento de Cookies",
+    "cookiesText": "Você pode configurar o seu navegador para recusar todos ou alguns cookies, ou para alertá-lo quando sites definirem ou acessarem cookies. Caso desative os cookies, algumas funcionalidades de exibição de terceiros podem funcionar de forma limitada, mas a leitura dos conteúdos bíblicos continuará disponível normalmente.",
+    "infraTitle": "4. Infraestrutura e Links Externos",
+    "infraText": "Nosso site utiliza serviços de entrega de conteúdo e proteção de rede (Cloudflare) e banco de dados (Google Firebase) sob protocolo HTTPS para garantir segurança e disponibilidade. Eventuais links para materiais ou sites externos possuem suas próprias políticas de privacidade, pelas quais não nos responsabilizamos.",
+    "lgpdTitle": "5. Seus Direitos (LGPD)",
+    "lgpdText": "Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), você tem direito à transparência sobre o tratamento de dados, bem como a revogar o consentimento de cookies de publicidade diretamente nas configurações do seu navegador ou nos links indicados acima.",
+    "changesTitle": "6. Alterações nesta Política",
+    "changesText": "Podemos atualizar esta Política de Privacidade periodicamente para refletir melhorias no site ou exigências legais e de parceiros como o Google. Recomendamos que você revise esta página regularmente para se manter informado."
   }
 }
