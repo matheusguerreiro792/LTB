@@ -16,6 +16,8 @@
         <nav class="hidden md:flex items-center gap-8 font-medium">
           <NuxtLink :to="localePath('/devocionais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             {{ $t('nav.devotionals') }}</NuxtLink>
+          <NuxtLink v-if="hasArticles" :to="localePath('/artigos')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {{ $t('nav.articles') }}</NuxtLink>
           <NuxtLink v-if="hasStudies" :to="localePath('/estudos')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{{ $t('nav.studies') }}</NuxtLink>
           <NuxtLink v-if="hasMaterials" :to="localePath('/materiais')" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
             {{ $t('nav.materials') }}</NuxtLink>
@@ -67,6 +69,8 @@
         class="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 px-4 py-4 space-y-4">
         <NuxtLink @click="isMobileMenuOpen = false" :to="localePath('/devocionais')" class="block font-medium hover:text-primary-600">
           {{ $t('nav.devotionals') }}</NuxtLink>
+        <NuxtLink v-if="hasArticles" @click="isMobileMenuOpen = false" :to="localePath('/artigos')" class="block font-medium hover:text-primary-600">
+          {{ $t('nav.articles') }}</NuxtLink>
         <NuxtLink v-if="hasStudies" @click="isMobileMenuOpen = false" :to="localePath('/estudos')" class="block font-medium hover:text-primary-600">
           {{ $t('nav.studies') }}</NuxtLink>
         <NuxtLink v-if="hasMaterials" @click="isMobileMenuOpen = false" :to="localePath('/materiais')" class="block font-medium hover:text-primary-600">
@@ -106,6 +110,10 @@
             <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
               <li>
                 <NuxtLink :to="localePath('/devocionais')" class="hover:text-primary-600 transition-colors">{{ $t('footer.dailyDevotionals') }}
+                </NuxtLink>
+              </li>
+              <li v-if="hasArticles">
+                <NuxtLink :to="localePath('/artigos')" class="hover:text-primary-600 transition-colors">{{ $t('footer.articles') }}
                 </NuxtLink>
               </li>
               <!-- <li><NuxtLink :to="localePath('/estudos')" class="hover:text-primary-600 transition-colors">Estudos Teológicos</NuxtLink></li> -->
@@ -177,6 +185,17 @@ const { data: estudosData } = await useFetch('/api/estudos', {
 
 const hasStudies = computed(() => {
   return (estudosData.value || []).some(
+    item => hasDocTranslation(item, locale.value)
+  )
+})
+
+const { data: artigosData } = await useFetch('/api/artigos', {
+  key: 'artigos-list',
+  default: () => []
+})
+
+const hasArticles = computed(() => {
+  return (artigosData.value || []).some(
     item => hasDocTranslation(item, locale.value)
   )
 })

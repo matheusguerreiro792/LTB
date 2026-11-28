@@ -6,6 +6,7 @@
   },
   "nav": {
     "devotionals": "Devotionals",
+    "articles": "Articles",
     "studies": "Studies",
     "materials": "Materials",
     "about": "About",
@@ -18,6 +19,7 @@
     "description": "Sharing in-depth biblical knowledge and devotionals based on the commentaries of Matthew Henry. For the edification of the Church.",
     "quickLinks": "Quick Links",
     "dailyDevotionals": "Daily Devotionals",
+    "articles": "Articles",
     "support": "Support",
     "buyMaterials": "Browse Materials",
     "donations": "Donations",
@@ -47,6 +49,7 @@
     "fallbackSubtitle": "Follow our daily devotionals grounded in the Word of God.",
     "recentStudies": "Recent Studies",
     "noStudies": "No studies published yet.",
+    "recentArticles": "Recent Articles",
     "ctaTitle": "Deepen your knowledge",
     "ctaDescription": "Explore our recommended materials and books to support your Bible studies and devotional life.",
     "ctaButton": "Browse Materials"
@@ -62,6 +65,19 @@
     "shareTitle": "Did this reflection bless you?",
     "shareSubtitle": "Share it with your friends and family.",
     "fallbackNotice": "This devotional is currently only available in Portuguese."
+  },
+  "articles": {
+    "pageTitle": "Articles",
+    "heading": "Articles",
+    "subtitle": "Reflections and writings grounded in the Word of God for your edification.",
+    "searchPlaceholder": "Search by title or verse...",
+    "empty": "No articles found.",
+    "notFoundTitle": "Article not found",
+    "notFoundDescription": "This content may have been removed or the link is incorrect.",
+    "backToList": "Back to articles",
+    "shareTitle": "Did this article bless you?",
+    "shareSubtitle": "Share it with your friends and family.",
+    "fallbackNotice": "This article is currently only available in Portuguese."
   },
   "studies": {
     "pageTitle": "Theological Studies",

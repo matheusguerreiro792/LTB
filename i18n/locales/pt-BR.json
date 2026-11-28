@@ -6,6 +6,7 @@
   },
   "nav": {
     "devotionals": "Devocionais",
+    "articles": "Artigos",
     "studies": "Estudos",
     "materials": "Materiais",
     "about": "Sobre",
@@ -18,6 +19,7 @@
     "description": "Compartilhando conhecimento bíblico e devocionais com profundidade, baseado nos comentários de Matthew Henry. Para a edificação da Igreja.",
     "quickLinks": "Link Rápido",
     "dailyDevotionals": "Devocionais Diários",
+    "articles": "Artigos",
     "support": "Apoie",
     "buyMaterials": "Adquirir Materiais",
     "donations": "Doações",
@@ -47,6 +49,7 @@
     "fallbackSubtitle": "Acompanhe nossos devocionais diários baseados na palavra de Deus.",
     "recentStudies": "Estudos Recentes",
     "noStudies": "Nenhum estudo publicado ainda.",
+    "recentArticles": "Artigos Recentes",
     "ctaTitle": "Aprofunde seu conhecimento",
     "ctaDescription": "Conheça nossos materiais e livros recomendados para auxiliar nos seus estudos bíblicos e vida devocional.",
     "ctaButton": "Acessar Materiais"
@@ -60,6 +63,19 @@
     "notFoundDescription": "Este conteúdo pode ter sido removido ou o link está incorreto.",
     "backToList": "Voltar para devocionais",
     "shareTitle": "Gostou desta reflexão?",
+    "shareSubtitle": "Compartilhe com seus amigos e familiares.",
+    "fallbackNotice": ""
+  },
+  "articles": {
+    "pageTitle": "Artigos",
+    "heading": "Artigos",
+    "subtitle": "Reflexões e textos fundamentados na Palavra de Deus para sua edificação.",
+    "searchPlaceholder": "Buscar por título ou versículo...",
+    "empty": "Nenhum artigo encontrado.",
+    "notFoundTitle": "Artigo não encontrado",
+    "notFoundDescription": "Este conteúdo pode ter sido removido ou o link está incorreto.",
+    "backToList": "Voltar para artigos",
+    "shareTitle": "Gostou deste artigo?",
     "shareSubtitle": "Compartilhe com seus amigos e familiares.",
     "fallbackNotice": ""
   },

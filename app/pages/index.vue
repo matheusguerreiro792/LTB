@@ -55,6 +55,39 @@
         <span class="text-xs text-gray-400 uppercase tracking-wider">{{ $t('common.adSpace') }}</span>
       </div>
 
+      <!-- Últimos Artigos -->
+      <section v-if="artigos.length > 0">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl font-bold">{{ $t('home.recentArticles') }}</h2>
+          <NuxtLink :to="localePath('/artigos')"
+            class="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium text-sm flex items-center gap-1">
+            {{ $t('common.viewAll') }}
+            <Icon name="lucide:chevron-right" class="w-4 h-4" />
+          </NuxtLink>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <article v-for="artigo in artigos" :key="artigo.id"
+            class="group bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none dark:hover:border-gray-700 transition-all">
+            <div class="p-6 space-y-4">
+              <NuxtLink :to="localePath(`/artigos/${artigo.id}`)" class="block">
+                <h3
+                  class="font-bold text-xl leading-snug group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
+                  {{ artigo.titulo }}
+                </h3>
+              </NuxtLink>
+              <p v-if="artigo.versiculo" class="text-xs italic text-primary-600 dark:text-primary-400 line-clamp-2">
+                {{ artigo.versiculo }}
+              </p>
+              <div
+                class="text-gray-600 dark:text-gray-400 text-sm line-clamp-2 prose prose-sm dark:prose-invert max-w-none prose-p:my-0 prose-headings:my-0"
+                v-html="renderMarkdown(artigo.conteudo)">
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <!-- Últimos Estudos Teológicos -->
       <section v-if="estudos.length > 0">
         <div class="flex items-center justify-between mb-8">
@@ -140,6 +173,11 @@ const { data: estudosData } = await useFetch('/api/estudos', {
   default: () => []
 })
 
+const { data: artigosData } = await useFetch('/api/artigos', {
+  key: 'home-artigos',
+  default: () => []
+})
+
 const { data: materiaisData } = await useFetch('/api/materiais', {
   key: 'materiais-list',
   default: () => []
@@ -161,6 +199,13 @@ const estudos = computed(() => {
     .filter(e => hasDocTranslation(e, locale.value))
     .slice(0, 3)
     .map(e => useLocalizedDoc(e, locale.value))
+})
+
+const artigos = computed(() => {
+  return (artigosData.value || [])
+    .filter(a => hasDocTranslation(a, locale.value))
+    .slice(0, 3)
+    .map(a => useLocalizedDoc(a, locale.value))
 })
 
 const renderMarkdown = (text) => {

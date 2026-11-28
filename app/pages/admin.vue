@@ -38,7 +38,7 @@
       <header class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <h1 class="text-3xl font-bold">Painel Administrativo</h1>
-          <p class="text-gray-500">Gerencie devocionais e estudos</p>
+          <p class="text-gray-500">Gerencie devocionais, artigos e estudos</p>
         </div>
         <button @click="logout"
           class="text-gray-500 hover:text-red-500 flex items-center gap-2 text-sm font-medium transition-colors">
@@ -48,7 +48,7 @@
       </header>
 
       <div v-if="currentView === 'dashboard'" class="space-y-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div @click="openForm('new_devocional')"
             class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors group">
             <div
@@ -57,6 +57,16 @@
             </div>
             <h3 class="font-bold text-lg">Novo Devocional</h3>
             <p class="text-sm text-gray-500 mt-1">Criar reflexão diária</p>
+          </div>
+
+          <div @click="openForm('new_artigo')"
+            class="bg-white dark:bg-gray-900 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-primary-500 cursor-pointer transition-colors group">
+            <div
+              class="w-10 h-10 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Icon name="lucide:newspaper" class="w-5 h-5" />
+            </div>
+            <h3 class="font-bold text-lg">Novo Artigo</h3>
+            <p class="text-sm text-gray-500 mt-1">Publicar novo artigo</p>
           </div>
 
           <div @click="openForm('new_estudo')"
@@ -221,6 +231,99 @@
                       <Icon name="lucide:edit-2" class="w-4 h-4" />
                     </button>
                     <button @click="deleteItem(item.raw.id, 'devocionais')"
+                      class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      title="Excluir">
+                      <Icon name="lucide:trash-2" class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Listagem de Artigos -->
+        <div class="space-y-4">
+          <h2 class="text-xl font-bold flex items-center gap-2">
+            <Icon name="lucide:newspaper" class="w-5 h-5 text-primary-600" />
+            Artigos Publicados
+          </h2>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Coluna PT -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                  Português (PT)
+                </h3>
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300">
+                  {{ artigosPt.length }}
+                </span>
+              </div>
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+                <div v-if="artigosPt.length === 0" class="p-6 text-center text-gray-500">
+                  Nenhum artigo em português encontrado.
+                </div>
+                <div v-for="art in artigosPt" :key="`pt-${art.id}`"
+                  class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors gap-2">
+                  <div class="flex-1 min-w-0 space-y-1">
+                    <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ art.titulo }}</h4>
+                    <p v-if="art.versiculo" class="text-xs text-gray-500 dark:text-gray-400 italic line-clamp-1">
+                      {{ art.versiculo }}
+                    </p>
+                    <div class="text-xs text-gray-500">
+                      {{ formatDate(art.createdAt) }}
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button @click="editItem(art, 'artigo', 'pt-BR')"
+                      class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                      title="Editar em PT">
+                      <Icon name="lucide:edit-2" class="w-4 h-4" />
+                    </button>
+                    <button @click="deleteItem(art.id, 'artigos')"
+                      class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                      title="Excluir">
+                      <Icon name="lucide:trash-2" class="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Coluna EN -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between px-1">
+                <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                  English (EN)
+                </h3>
+                <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400">
+                  {{ artigosEn.length }}
+                </span>
+              </div>
+              <div
+                class="bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl overflow-hidden">
+                <div v-if="artigosEn.length === 0" class="p-6 text-center text-gray-500">
+                  Nenhum artigo em inglês encontrado.
+                </div>
+                <div v-for="item in artigosEn" :key="`en-${item.raw.id}`"
+                  class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-gray-100 dark:border-gray-800 last:border-0 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors gap-2">
+                  <div class="flex-1 min-w-0 space-y-1">
+                    <h4 class="font-bold text-gray-900 dark:text-gray-100">{{ item.en.titulo }}</h4>
+                    <p v-if="item.en.versiculo" class="text-xs text-gray-500 dark:text-gray-400 italic line-clamp-1">
+                      {{ item.en.versiculo }}
+                    </p>
+                    <div class="text-xs text-gray-500">
+                      {{ formatDate(item.raw.createdAt) }}
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <button @click="editItem(item.raw, 'artigo', 'en-US')"
+                      class="p-2 text-gray-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/30 rounded-lg transition-colors"
+                      title="Editar em EN">
+                      <Icon name="lucide:edit-2" class="w-4 h-4" />
+                    </button>
+                    <button @click="deleteItem(item.raw.id, 'artigos')"
                       class="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
                       title="Excluir">
                       <Icon name="lucide:trash-2" class="w-4 h-4" />
@@ -401,6 +504,106 @@
               class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
               <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
               <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Devocional')
+              }}</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Formulário de Novo Artigo -->
+      <div v-else-if="currentView === 'new_artigo'"
+        class="bg-white dark:bg-gray-900 rounded-3xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+        <div class="border-b border-gray-100 dark:border-gray-800 p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <button @click="currentView = 'dashboard'"
+              class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+              <Icon name="lucide:arrow-left" class="w-5 h-5" />
+            </button>
+            <h2 class="text-xl font-bold">{{ editingId ? 'Editar Artigo' : 'Criar Novo Artigo' }}</h2>
+          </div>
+          <div class="flex items-center bg-gray-100 dark:bg-gray-800 rounded-xl p-1 text-xs font-semibold">
+            <button type="button" @click="formLang = 'pt-BR'"
+              :class="formLang === 'pt-BR' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              Português (PT-BR)
+            </button>
+            <button type="button" @click="formLang = 'en-US'"
+              :class="formLang === 'en-US' ? 'bg-white dark:bg-gray-900 text-primary-600 shadow-xs' : 'text-gray-500'"
+              class="px-3 py-1.5 rounded-lg transition-colors">
+              English (EN-US)
+            </button>
+          </div>
+        </div>
+
+        <form @submit.prevent="submitArtigo" class="p-6 md:p-8 space-y-6">
+          <template v-if="formLang === 'pt-BR'">
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Título</label>
+              <input v-model="artigoForm.titulo" type="text" required
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Versículo-chave</label>
+              <input v-model="artigoForm.versiculo" type="text" required
+                placeholder="Ex: 'Porque Deus amou o mundo de tal maneira...' (João 3:16)"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Conteúdo do Artigo
+                  (Markdown)</label>
+                <span class="text-xs text-gray-500">Suporta # títulos, **negrito**, *itálico*, > citações</span>
+              </div>
+              <textarea v-model="artigoForm.conteudo" required rows="12"
+                placeholder="## Título principal&#10;&#10;Escreva o artigo aqui usando Markdown..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
+            </div>
+          </template>
+
+          <template v-else>
+            <p class="text-xs text-gray-500 bg-gray-50 dark:bg-gray-800/60 px-4 py-2.5 rounded-xl">
+              Campos opcionais em inglês americano (en-US). Se preenchidos, o artigo aparecerá automaticamente na
+              versão em inglês do site (/en/articles).
+            </p>
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title (EN-US)</label>
+              <input v-model="artigoForm.en.titulo" type="text"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Key Verse (EN-US)</label>
+              <input v-model="artigoForm.en.versiculo" type="text"
+                placeholder="Ex: 'For God so loved the world...' (John 3:16)"
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow">
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Article Content (Markdown -
+                EN-US)</label>
+              <textarea v-model="artigoForm.en.conteudo" rows="12"
+                placeholder="## Main title&#10;&#10;Write the English version here..."
+                class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-primary-500 transition-shadow resize-y font-mono text-sm"></textarea>
+            </div>
+          </template>
+
+          <div v-if="submitMessage"
+            :class="submitError ? 'bg-red-50 text-red-600 dark:bg-red-900/30' : 'bg-green-50 text-green-600 dark:bg-green-900/30'"
+            class="p-4 rounded-xl text-sm">
+            {{ submitMessage }}
+          </div>
+
+          <div class="pt-4 flex justify-end gap-4">
+            <button type="button" @click="currentView = 'dashboard'"
+              class="px-6 py-3 rounded-xl font-medium text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors">
+              Cancelar
+            </button>
+            <button type="submit" :disabled="isSubmitting"
+              class="bg-primary-600 hover:bg-primary-700 text-white font-medium px-8 py-3 rounded-xl transition-all shadow-lg shadow-primary-500/30 disabled:opacity-50 flex items-center gap-2">
+              <Icon v-if="isSubmitting" name="lucide:loader" class="w-4 h-4 animate-spin" />
+              <span>{{ isSubmitting ? 'Salvando...' : (editingId ? 'Salvar Alterações' : 'Publicar Artigo')
               }}</span>
             </button>
           </div>
@@ -789,6 +992,7 @@ const devocionalForm = reactive({
 })
 
 const devocionaisList = ref([])
+const artigosList = ref([])
 const estudosList = ref([])
 const materiaisList = ref([])
 const editingId = ref(null)
@@ -803,6 +1007,30 @@ const devocionaisEn = computed(() => {
     .map(dev => ({
       raw: dev,
       en: useLocalizedDoc(dev, 'en')
+    }))
+})
+
+const artigoForm = reactive({
+  titulo: '',
+  versiculo: '',
+  conteudo: '',
+  en: {
+    titulo: '',
+    versiculo: '',
+    conteudo: ''
+  }
+})
+
+const artigosPt = computed(() => {
+  return artigosList.value.filter(art => hasDocTranslation(art, 'pt-BR'))
+})
+
+const artigosEn = computed(() => {
+  return artigosList.value
+    .filter(art => hasDocTranslation(art, 'en'))
+    .map(art => ({
+      raw: art,
+      en: useLocalizedDoc(art, 'en')
     }))
 })
 
@@ -870,6 +1098,11 @@ const fetchLists = async () => {
     const devQ = query(collection($firestore, 'devocionais'), orderBy('createdAt', 'desc'))
     const devSnap = await getDocs(devQ)
     devocionaisList.value = devSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+
+    // Buscar artigos
+    const artQ = query(collection($firestore, 'artigos'), orderBy('createdAt', 'desc'))
+    const artSnap = await getDocs(artQ)
+    artigosList.value = artSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 
     // Buscar estudos
     const estQ = query(collection($firestore, 'estudos'), orderBy('createdAt', 'desc'))
@@ -978,6 +1211,58 @@ const submitDevocional = async () => {
     console.error("Erro ao salvar devocional: ", e)
     submitError.value = true
     submitMessage.value = "Erro ao salvar devocional. Tente novamente."
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const submitArtigo = async () => {
+  if (!$firestore) {
+    submitError.value = true
+    submitMessage.value = "Erro: Firestore não está conectado."
+    return
+  }
+
+  isSubmitting.value = true
+  submitError.value = false
+  submitMessage.value = ''
+
+  try {
+    const data = {
+      titulo: artigoForm.titulo,
+      versiculo: artigoForm.versiculo,
+      conteudo: artigoForm.conteudo,
+      translations: buildTranslationsPayload(artigoForm.en),
+    }
+
+    if (editingId.value) {
+      const docRef = doc($firestore, "artigos", editingId.value)
+      await updateDoc(docRef, data)
+      submitMessage.value = "Artigo atualizado com sucesso!"
+    } else {
+      data.createdAt = serverTimestamp()
+      await addDoc(collection($firestore, "artigos"), data)
+      submitMessage.value = "Artigo publicado com sucesso!"
+    }
+
+    // Limpar form
+    artigoForm.titulo = ''
+    artigoForm.versiculo = ''
+    artigoForm.conteudo = ''
+    resetEnFields(artigoForm.en)
+    formLang.value = 'pt-BR'
+    editingId.value = null
+
+    fetchLists()
+    setTimeout(() => {
+      submitMessage.value = ''
+      currentView.value = 'dashboard'
+    }, 2000)
+
+  } catch (e) {
+    console.error("Erro ao salvar artigo: ", e)
+    submitError.value = true
+    submitMessage.value = "Erro ao salvar artigo. Tente novamente."
   } finally {
     isSubmitting.value = false
   }
@@ -1115,6 +1400,11 @@ const openForm = (viewName) => {
     devocionalForm.tema = ''
     devocionalForm.conteudo = ''
     resetEnFields(devocionalForm.en)
+  } else if (viewName === 'new_artigo') {
+    artigoForm.titulo = ''
+    artigoForm.versiculo = ''
+    artigoForm.conteudo = ''
+    resetEnFields(artigoForm.en)
   } else if (viewName === 'new_estudo') {
     estudoForm.titulo = ''
     estudoForm.livro = ''
@@ -1154,6 +1444,14 @@ const editItem = (item, type, initialLang = 'pt-BR') => {
     devocionalForm.en.tema = en.tema || ''
     devocionalForm.en.conteudo = en.conteudo || ''
     currentView.value = 'new_devocional'
+  } else if (type === 'artigo') {
+    artigoForm.titulo = item.titulo || ''
+    artigoForm.versiculo = item.versiculo || ''
+    artigoForm.conteudo = item.conteudo || ''
+    artigoForm.en.titulo = en.titulo || ''
+    artigoForm.en.versiculo = en.versiculo || ''
+    artigoForm.en.conteudo = en.conteudo || ''
+    currentView.value = 'new_artigo'
   } else if (type === 'estudo') {
     estudoForm.titulo = item.titulo || ''
     estudoForm.livro = item.livro || ''

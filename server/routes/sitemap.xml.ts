@@ -36,9 +36,10 @@ export default defineCachedEventHandler(
   async (event) => {
     const baseUrl = (process.env.NUXT_PUBLIC_SITE_URL || 'https://vivaabiblia.com.br').replace(/\/$/, '')
 
-    const [devocionais, estudos, materiais] = await Promise.all([
+    const [devocionais, estudos, artigos, materiais] = await Promise.all([
       fetchFirestoreCollection('devocionais'),
       fetchFirestoreCollection('estudos'),
+      fetchFirestoreCollection('artigos'),
       fetchFirestoreCollection('materiais'),
     ])
 
@@ -75,6 +76,13 @@ export default defineCachedEventHandler(
       entries.push({ loc: `${baseUrl}/en/studies`, changefreq: 'weekly', priority: '0.8' })
     }
 
+    if (artigos.some(hasPtContent)) {
+      entries.push({ loc: `${baseUrl}/artigos`, changefreq: 'weekly', priority: '0.8' })
+    }
+    if (artigos.some(hasEnContent)) {
+      entries.push({ loc: `${baseUrl}/en/articles`, changefreq: 'weekly', priority: '0.8' })
+    }
+
     for (const dev of devocionais as Record<string, any>[]) {
       const lastmod = formatLastMod(dev.createdAt)
       if (hasPtContent(dev)) {
@@ -108,6 +116,26 @@ export default defineCachedEventHandler(
       if (hasEnContent(est)) {
         entries.push({
           loc: `${baseUrl}/en/studies/${est.id}`,
+          lastmod,
+          changefreq: 'monthly',
+          priority: '0.8',
+        })
+      }
+    }
+
+    for (const art of artigos as Record<string, any>[]) {
+      const lastmod = formatLastMod(art.createdAt)
+      if (hasPtContent(art)) {
+        entries.push({
+          loc: `${baseUrl}/artigos/${art.id}`,
+          lastmod,
+          changefreq: 'monthly',
+          priority: '0.8',
+        })
+      }
+      if (hasEnContent(art)) {
+        entries.push({
+          loc: `${baseUrl}/en/articles/${art.id}`,
           lastmod,
           changefreq: 'monthly',
           priority: '0.8',
